@@ -138,6 +138,9 @@ export default function DepositForm({ label = null }) {
                   "You can only withdraw funds after you complete your KYC."
                 );
                 return;
+              } else if (!user.walletAddress) {
+                toast.error("You have not added a USDT withdraw address yet.");
+                return;
               }
               setConfirmInvestmentModal(true);
             }}
