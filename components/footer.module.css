@@ -26,6 +26,15 @@
     @media (min-width: 640px) {
       grid-column: span 3;
     }
+    @media (max-width: 640px) {
+      & a {
+        display: inline-block;
+        width: 100%;
+      }
+      & > * {
+        text-align: center;
+      }
+    }
 
     @media (min-width: 768px) {
       grid-column: span 4;
@@ -63,12 +72,21 @@
     color: var(--jacarta-700); /* gray-900 */
     font-weight: 600;
     font-family: "Inter", sans-serif;
+    @media (max-width: 640px) {
+      text-align: center;
+    }
   }
 
   & .column ul {
     display: flex;
     flex-direction: column;
     gap: 4px;
+
+    @media (max-width: 640px) {
+      & > * {
+        text-align: center;
+      }
+    }
   }
 
   & .column a,

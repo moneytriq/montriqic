@@ -2,16 +2,77 @@
 import Image from "next/image";
 import styles from "./contact-section.module.css";
 import { MobileNavContext } from "@/store/mobileNav-context";
-import { use, useEffect } from "react";
+import { use, useActionState, useEffect, useState } from "react";
+import submitEnquiry from "@/actions/submit-enquiry";
+import { toast } from "sonner";
 
 export default function ContactSection() {
   const { mobileNav, setMobileNav } = use(MobileNavContext);
+  const [formInputs, setFormInputs] = useState({
+    name: "",
+    email: "",
+    tel: "",
+    message: "",
+  });
+
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (mobileNav) {
       setMobileNav(false);
     }
   }, []);
+
+  const [formStat, formAction] = useActionState(
+    async (prevState, formData) => {
+      try {
+        const res = await submitEnquiry(prevState, formData);
+
+        if (!res.errors) {
+          setFormInputs({
+            name: "",
+            email: "",
+            tel: "",
+            message: "",
+          });
+          toast.success(
+            "Your message was sent successfully! You will recieve a response via the email provided shortly"
+          );
+          return {};
+        } else if (res.errors.check) {
+          toast.error("Please agree with our terms of service");
+          return
+        }
+        const errors = res.errors;
+        setErrors(errors);
+        return;
+      } catch (error) {
+        console.log(error.message);
+        toast.error("Failed to send message, try again");
+      }
+    },
+
+    {}
+  );
+
+  function handleChange(e) {
+    const isError = errors[e.target.name];
+    if (isError) {
+      setErrors((prev) => {
+        return {
+          ...prev,
+          [e.target.name]: "",
+        };
+      });
+    }
+    setFormInputs((prev) => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value,
+      };
+    });
+  }
+
   return (
     <div className={styles.contactSection}>
       <div className={styles.flex}>
@@ -23,7 +84,7 @@ export default function ContactSection() {
             assistance, do not hesitate to contact our specialists.
           </p>
 
-          <form id="contact-form" method="post" action="#">
+          <form action={formAction} id="contact-form" method="post">
             <div className={styles.row}>
               <div className={styles.inputGroup}>
                 <label htmlFor="name" className={styles.label}>
@@ -33,9 +94,14 @@ export default function ContactSection() {
                   name="name"
                   id="name"
                   type="text"
-                  required
+                  // required
                   className={styles.input}
+                  onChange={handleChange}
+                  value={formInputs.name}
                 />
+                {errors?.name && (
+                  <p className="error-message ">{errors.name}</p>
+                )}
               </div>
 
               <div className={styles.inputGroup}>
@@ -46,10 +112,15 @@ export default function ContactSection() {
                   name="email"
                   id="email"
                   type="email"
-                  required
+                  // required
                   className={styles.input}
+                  onChange={handleChange}
+                  value={formInputs.email}
                 />
               </div>
+              {errors?.email && (
+                <p className="error-message ">{errors.email}</p>
+              )}
             </div>
 
             <div className={styles.row}>
@@ -58,12 +129,15 @@ export default function ContactSection() {
                   Phone Number<span className={styles.required}>*</span>
                 </label>
                 <input
-                  name="phone"
-                  id="phone"
+                  name="tel"
+                  id="tel"
                   type="tel"
-                  required
+                  // required
                   className={styles.input}
+                  onChange={handleChange}
+                  value={formInputs.tel}
                 />
+                {errors?.tel && <p className="error-message ">{errors.tel}</p>}
               </div>
             </div>
 
@@ -75,15 +149,21 @@ export default function ContactSection() {
                 id="message"
                 name="message"
                 rows="5"
-                required
+                // required
                 className={styles.textarea}
+                onChange={handleChange}
+                value={formInputs.message}
               />
+              {errors?.message && (
+                <p className="error-message ">{errors.message}</p>
+              )}
             </div>
 
             <div className={styles.checkboxRow}>
               <input
                 type="checkbox"
                 id="contact-form-consent-input"
+                name="checkbox"
                 className={styles.checkbox}
               />
               <label
