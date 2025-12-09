@@ -5,8 +5,13 @@ export default function RecentActivitiesGrid({
   baseUrl,
   label = null,
 }) {
+
+  if(activities.length < 1) {
+    return <p className="no-data">You not performed any activity yet.</p>
+  }
   return (
     <div className={styles.recentActivitiesGrid}>
+
       {activities.map((activity, index) => (
         <RecentActivityCard
           key={index}
