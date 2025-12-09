@@ -82,7 +82,7 @@ export default function KycGrid() {
         {user.kycStatus === "not verified" ? (
           <p>
             By clicking proceed, you have agreed to our{" "}
-            <LinkWithProgress href="#">Terms and Conditions</LinkWithProgress>
+            <LinkWithProgress href="/terms-and-conditions">Terms and Conditions</LinkWithProgress>
           </p>
         ) : (
           <p>
@@ -91,7 +91,7 @@ export default function KycGrid() {
               ? "pending KYC verification. "
               : " a verified user."}{" "}
             Read our{" "}
-            <LinkWithProgress href="#">Privacy Policy</LinkWithProgress>
+            <LinkWithProgress href="/privacy-policy">Privacy Policy</LinkWithProgress>
           </p>
         )}
       </div>

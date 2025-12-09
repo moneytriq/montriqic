@@ -10,9 +10,9 @@ export default function DashboardFooter({ prompt = null }) {
         Monetriq @ {new Date().getFullYear()}. All Rights Reserved{" "}
       </span>
       <span className={styles.links}>
-        <LinkWithProgress href="#">FAQ</LinkWithProgress>
-        <LinkWithProgress href="#">Terms and Conditions</LinkWithProgress>
-        <LinkWithProgress href="#">Privacy Policy</LinkWithProgress>
+        <LinkWithProgress href="/faq">FAQ</LinkWithProgress>
+        <LinkWithProgress href="/terms-and-conditions">Terms and Conditions</LinkWithProgress>
+        <LinkWithProgress href="/privacy-policy">Privacy Policy</LinkWithProgress>
       </span>
     </div>
   );

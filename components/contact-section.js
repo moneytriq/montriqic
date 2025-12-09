@@ -5,6 +5,7 @@ import { MobileNavContext } from "@/store/mobileNav-context";
 import { use, useActionState, useEffect, useState } from "react";
 import submitEnquiry from "@/actions/submit-enquiry";
 import { toast } from "sonner";
+import LinkWithProgress from "./ui/link-with-progress";
 
 export default function ContactSection() {
   const { mobileNav, setMobileNav } = use(MobileNavContext);
@@ -23,7 +24,7 @@ export default function ContactSection() {
     }
   }, []);
 
-  const [formStat, formAction] = useActionState(
+  const [formState, formAction] = useActionState(
     async (prevState, formData) => {
       try {
         const res = await submitEnquiry(prevState, formData);
@@ -41,7 +42,7 @@ export default function ContactSection() {
           return {};
         } else if (res.errors.check) {
           toast.error("Please agree with our terms of service");
-          return
+          return;
         }
         const errors = res.errors;
         setErrors(errors);
@@ -171,9 +172,12 @@ export default function ContactSection() {
                 className={styles.checkboxLabel}
               >
                 I agree to the{" "}
-                <a href="/terms" className={styles.link}>
+                <LinkWithProgress
+                  href="/terms-and-conditions"
+                  className={styles.link}
+                >
                   Terms of Service
-                </a>
+                </LinkWithProgress>
               </label>
             </div>
 
