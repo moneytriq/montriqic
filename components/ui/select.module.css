@@ -1,0 +1,118 @@
+.selectWrapper {
+  width: 100%;
+  position: relative;
+
+  /* The button (closed state) */
+  & .button {
+    color: var(--jacarta-500);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    font-size: 1rem;
+    background: var(--white);
+    border: var(--card-border);
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  & .button:hover {
+    border-color: var(--jacarta-400);
+  }
+
+  /* Dropdown container */
+  & .options {
+    color: var(--jacarta-500);
+    margin-top: 6px;
+    position: absolute;
+    width: 100%;
+    background: var(--white);
+    border: var(--card-border);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    z-index: 50;
+    overflow-y: scroll;
+    max-height: 200px;
+  }
+
+  & .investmentFormLabel {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    & span {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      & p {
+        font-size: 0.8rem;
+        color: var(--jacarta-400);
+      }
+    }
+  }
+
+  & .dropdownIcon {
+    align-self: flex-end;
+  }
+
+  /* Each option */
+  & .option {
+    padding: 10px 14px;
+    cursor: pointer;
+  }
+
+  /* Hover state */
+  & .active {
+    background: #f0f6ff;
+  }
+
+  /* Selected option */
+  & .selected {
+    background: #e3efff;
+    font-weight: 600;
+  }
+
+  /* For keyboard focus (Headless UI applies focus ring) */
+  & .option:focus {
+    outline: none;
+  }
+
+  /* Enter animation */
+  & .enter {
+    transition: all 150ms ease-out;
+  }
+
+  & .enterFrom {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  & .enterTo {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  & .leave {
+    transition: all 120ms ease-in;
+  }
+
+  & .leaveFrom {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  & .leaveTo {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+.dropUp .options {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: 6px;
+}

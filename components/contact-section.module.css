@@ -1,0 +1,207 @@
+.contactSection {
+  & .flex {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    @media (min-width: 1024px) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+  }
+
+  & .formWrapper {
+    width: 100%;
+    margin-bottom: 40px;
+    @media (min-width: 1024px) {
+      width: 66.666%;
+      padding-right: 48px;
+    }
+  }
+
+  & form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  & .heading {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--jacarta-700);
+    margin-bottom: 10px;
+  }
+
+  & .description {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    margin-bottom: 40px;
+    color: var(--jacarta-500);
+  }
+
+  @media (max-width: 1024px) {
+    & .heading,
+    .description {
+      text-align: center;
+    }
+  }
+
+  & .row {
+    display: flex;
+    gap: 2rem;
+    width: 100%;
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+  }
+
+  & .inputGroup {
+    width: 100%;
+  }
+
+  & .label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1d1d1d;
+  }
+
+  & .required {
+    color: red;
+    margin-left: 3px;
+  }
+
+  & .input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--jacarta-500);
+    border-radius: 8px;
+    transition: 0.2s ease;
+  }
+
+  & .input:hover {
+    outline: 2px solid rgba(0, 150, 255, 0.2);
+  }
+
+  & .input:focus {
+    outline: 2px solid var(--teal-400);
+  }
+
+  & .textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: var(--card-border);
+    resize: vertical;
+  }
+
+  & .textarea:focus {
+    outline: 2px solid var(--teal-400);
+  }
+
+  & .checkboxRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 15px 0 25px;
+  }
+
+  & .checkbox {
+    width: 20px;
+    height: 20px;
+  }
+
+  & .checkboxLabel {
+    font-size: 0.95rem;
+  }
+
+  & .link {
+    color: var(--teal-400);
+  }
+
+  & .button {
+    background: var(--teal-400);
+    color: var(--white);
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-weight: 600;
+    border: none;
+    transition: 0.2s ease;
+  }
+
+  & .button:hover {
+    background: #007ada;
+  }
+
+  & .notice {
+    display: none;
+    margin-top: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+  }
+
+  & .infoWrapper {
+    width: 100%;
+    @media (min-width: 1024px) {
+      width: 33.333%;
+      padding-left: 20px;
+    }
+  }
+
+  & .infoCard {
+    background: white;
+    border: var(--card-border);
+    padding: 40px;
+    border-radius: 20px;
+  }
+
+  & .infoRow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  & .iconCircle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: var(--card-border);
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  & .infoTitle {
+    font-weight: 600;
+    color: #1d1d1d;
+    font-size: 1rem;
+  }
+
+  & .infoEmail {
+    font-size: 0.9rem;
+    color: #555;
+    text-decoration: none;
+  }
+
+  & .infoEmail:hover {
+    color: var(--teal-400);
+  }
+
+  & .bottomContainer {
+    height: 20rem;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+    padding-top: 20px;
+    position: relative;
+    margin: auto;
+  }
+
+  & .bottomImage {
+    width: 100%;
+    height: 100%;
+  }
+}

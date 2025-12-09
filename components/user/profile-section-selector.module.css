@@ -1,0 +1,52 @@
+& .profileSelectorModalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  & .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-self: flex-start;
+    margin-top: 1rem;
+    width: 100%;
+  }
+  & label {
+    color: var(--jacarta-700);
+    font-size: 1rem;
+  }
+
+  & input,
+  .select {
+    color: var(--jacarta-500);
+    padding: 1rem;
+    font-size: 1rem;
+    border: var(--card-border);
+    background: var(--white);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    width: 100%;
+
+    &:focus {
+      outline: 2px solid var(--teal-400);
+    }
+  }
+
+    & .buttonGroup {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1.5rem;
+      justify-content: flex-end;
+    }
+
+  & option {
+    background: var(--white);
+    color: var(--jacarta-400);
+    padding: 30px;
+
+    &:hover {
+      background: var(--jacarta-400);
+      color: var(--jacarta-700);
+    }
+  }
+}

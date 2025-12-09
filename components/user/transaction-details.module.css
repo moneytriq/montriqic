@@ -1,0 +1,107 @@
+.transactionDetailsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  width: 100%;
+
+  @media (min-width: 1024px) {
+    max-width: 700px;
+  }
+
+  & ul {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  & li {
+    padding: 1rem;
+    border-bottom: var(--card-border);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    & p:first-child {
+      color: var(--jacarta-400);
+      text-align: left;
+    }
+    & p:last-child {
+      color: var(--jacarta-700);
+      text-align: right;
+    }
+
+    & .time {
+      color: var(--jacarta-400) !important;
+    }
+  }
+
+  & .buttonGroup {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  & .button {
+    display: flex;
+    font-size: 1rem;
+    border: none;
+    color: var(--jacarta-700);
+    gap: 0.3rem;
+    background: none;
+    align-items: center;
+    font-weight: 700;
+    cursor: pointer;
+
+    & svg {
+      font-size: 1rem;
+      color: var(--jacarta-700);
+    }
+  }
+
+  & .actionButtonGroup {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+
+    & > button {
+      display: flex;
+      gap: 0.5rem;
+      text-decoration: none;
+      padding: 0.5rem 0.7rem;
+      width: fit-content;
+      color: var(--white);
+      border-radius: 3px;
+      align-items: center;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  }
+
+  & .imageGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+
+    @media (min-width: 1024) {
+      flex-direction: row;
+    }
+
+    & .imageWrapper {
+      position: relative;
+      height: 300px;
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+
+      @media (min-width: 1024) {
+        flex: 1;
+      }
+      & > img {
+        object-fit: contain;
+      }
+    }
+  }
+}

@@ -1,0 +1,153 @@
+& .grid {
+  display: grid;
+  flex-direction: column;
+  gap: 1rem;
+  grid-template-columns: repeat(1fr);
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+  }
+
+  /* Left Content */
+  & .leftContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+
+    @media (min-width: 1024px) {
+      align-items: flex-start;
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+  }
+
+  /* Badge */
+  & .badge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border: 1px solid var(--gray-text-700);
+    padding: 0.5rem 1.25rem;
+    border-radius: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  & .badge span {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-text-500);
+  }
+
+  /* Heading */
+  & .heading {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--jacarta-700);
+    @media (min-width: 1024px) {
+      text-align: left;
+      font-size: 4rem;
+    }
+  }
+
+  & html.dark .heading {
+    color: var(--white);
+  }
+
+  & .subtext {
+    margin-bottom: 2rem;
+    max-width: 28rem;
+    text-align: center;
+    font-size: 1.125rem;
+    color: var(--jacarta-500);
+  }
+
+  /* Button */
+  & .button {
+    background-color: var(--green-400);
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    color: var(--white);
+    font-weight: 600;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 8px 16px rgba(16, 185, 129, 0.25);
+    text-decoration: none;
+  }
+
+  & .button:hover {
+    background-color: var(--green-500); /* accent-dark */
+  }
+
+  /* Right Content */
+  & .rightContent {
+    width: 100%;
+    height: 100%;
+    grid-row: span 5;
+  }
+
+  & .heroWrapper {
+    position: relative;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    & > .iphoneImageContainer {
+      width: 50%;
+      height: 100%;
+      margin: auto;
+      min-height: 450px;
+      position: relative;
+      min-width: 260px;
+      max-width: 330px;
+      object-fit: contain;
+    }
+  }
+
+  /* Fly Animation */
+  & .flyWrapper {
+    position: absolute;
+    top: 0;
+    z-index: -10;
+    animation: fly 6s infinite ease-in-out;
+    width: 100%;
+    height: 100%;
+  }
+
+  & .lightFly {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  & .darkFly {
+    display: none;
+  }
+
+  & html.dark .lightFly {
+    display: none;
+  }
+  & html.dark .darkFly {
+    display: block;
+  }
+}
+
+@keyframes fly {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-18px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}

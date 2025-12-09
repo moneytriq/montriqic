@@ -1,0 +1,103 @@
+.profileGridContainer {
+  .profileGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    border-top: var(--card-border);
+    border-left: var(--card-border);
+    border-right: var(--card-border);
+
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+  }
+
+  & .profileCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-bottom: var(--card-border);
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: var(--card-box-shadow-hover);
+    }
+    & span {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      & p:first-child {
+        font-size: 1rem;
+        color: var(--jacarta-400);
+      }
+
+      & p:last-child {
+        font-size: 1rem;
+        color: var(--jacarta-500);
+      }
+    }
+
+    & svg {
+      color: var(--jacarta-400);
+      font-size: 0.9rem;
+    }
+  }
+
+  & .modalContent {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    & .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-self: flex-start;
+      margin-top: 1rem;
+      width: 100%;
+    }
+    & label {
+      color: var(--jacarta-700);
+      font-size: 1rem;
+    }
+
+    & input,
+    .select {
+      color: var(--jacarta-500);
+      padding: 1rem;
+      font-size: 1rem;
+      border: var(--card-border);
+      background: var(--white);
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      width: 100%;
+
+      &:focus {
+        outline: 2px solid var(--teal-400);
+      }
+    }
+
+    & option {
+      background: var(--white);
+      color: var(--jacarta-400);
+      padding: 30px;
+
+      &:hover {
+        background: var(--jacarta-400);
+        color: var(--jacarta-700);
+      }
+    }
+
+    & .buttonGroup {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1.5rem;
+      justify-content: flex-end;
+    }
+  }
+}

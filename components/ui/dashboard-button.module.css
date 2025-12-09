@@ -1,0 +1,14 @@
+.dButton {
+  display: flex;
+  gap: 0.5rem;
+  text-decoration: none;
+  padding: 0.5rem 0.7rem;
+  width: fit-content;
+  color: var(--white);
+  border-radius: 3px;
+  align-items: center;
+
+  & > svg {
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,34 @@
+.pagNavContainer {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+
+  & li {
+    text-transform: capitalize;
+    color: var(--jacarta-700);
+    font-size: 1rem;
+    padding: 1rem;
+    position: relative;
+    transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--teal-400);
+    }
+  }
+
+  & .activeTabIndicator {
+    background: var(--teal-400);
+    border-radius: 999px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+  }
+
+  & .active {
+    color: var(--teal-400);
+  }
+}

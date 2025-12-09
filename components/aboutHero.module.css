@@ -1,0 +1,133 @@
+/* components/AboutSection/AboutSection.module.css */
+
+.aboutHeroSection {
+  position: relative;
+
+  & .bgImage {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: -10;
+  }
+
+  & .bgImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+
+  & .layout {
+    display: block;
+    @media (min-width: 1024px) {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  /* LEFT IMAGE BLOCK */
+  & .left {
+    width: 100%;
+
+    @media (min-width: 1024px) {
+      width: 55%;
+    }
+  }
+
+  & .imageWrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  & .svgImage {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 32px;
+    transform: rotate(8deg);
+    display: block;
+  }
+
+  & .floatingImage {
+    position: absolute;
+    top: 0;
+    animation: fly 6s infinite ease-in-out;
+  }
+
+
+  /* RIGHT TEXT BLOCK */
+  & .right {
+    padding-top: 80px; /* py-20 */
+    padding-bottom: 80px;
+    @media (min-width: 1024px) {
+      width: 45%;
+      padding-left: 64px; /* lg:pl-16 */
+    }
+  }
+
+  & .title {
+    margin-bottom: 24px;
+    font-size: 24px; /* text-2xl */
+    font-weight: 600;
+    color: var(--jacarta-700);
+    font-family: "Inter", sans-serif;
+  }
+
+  & .subtitle {
+    margin-bottom: 32px;
+    font-size: 18px; /* text-lg */
+    line-height: 1.6;
+    color: var(--jacarta-400);
+  }
+
+  & .description {
+    margin-bottom: 40px;
+    font-size: 16px;
+    color: var(--jacarta-400);
+  }
+
+  /* STATS BLOCK */
+  & .statsRow {
+    display: flex;
+    gap: 16px;
+    @media (min-width: 640px) {
+      gap: 40px;
+    }
+  }
+
+  & .statBlock {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  & .statIcon {
+    width: 32px; /* w-8 */
+    height: 32px; /* h-8 */
+    flex-shrink: 0;
+    fill: var(  --teal-400); 
+  }
+
+  & .statValue {
+    display: block;
+    font-size: 20px; /* text-xl */
+    font-weight: 600;
+    color:var(--jacarta-700);
+    font-family: "Inter", sans-serif;
+  }
+
+  & .statLabel {
+    color: var(--jacarta-400);
+  }
+}
+  @keyframes fly {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }

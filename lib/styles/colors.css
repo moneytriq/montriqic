@@ -1,0 +1,35 @@
+:root {
+  --blue-400: #2563eb;
+  --blue-500: #1d4ed8;
+  --jacarta-300: #dcdada44;
+  --jacarta-400: #6d7089;
+  --jacarta-500: #37374e;
+  --jacarta-700: #1f2033;
+  --midnight-blue-400: rgba(17, 24, 39, 0.5);
+  --midnight-blue-500: #111827;
+  --green-300: rgba(34, 197, 94, 0.2);
+  --green-400: #10b981;
+  --green-500: #059669;
+
+   --red-400: #dc2626;
+
+  --purple-400: #4f46e5;
+  --purple-linear: linear-gradient(90deg, #6b4bff, #a26bff);
+  --teal-400: #3b82f6;
+  --yellow-400: #eab308;
+  --orange-300: rgba(197, 121, 34, 0.2);
+  --orange-400: #f97316;
+  --gray-text-300: #a0a0c2;
+  --gray-text-400: #6d7089;
+  --gray-text-500: #6b6b6b;
+  --gray-text-700: #4b5563;
+  --light-base-400: #f8fafc;
+
+  --white: #fff;
+
+  --card-border: 1px solid #e5e5e5;
+  --card-box-shadow-hover: 0 6px 25px rgba(0, 0, 0, 0.08);
+
+  --button-box-shadow: 0 4px 6px rgba(230, 230, 245, 0.2);
+  --button-box-shadow-hover: 0 4px 6px rgba(26, 115, 232, 0.3);
+}

@@ -1,0 +1,21 @@
+.aboutInfoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  max-width: 768px;
+  margin: auto;
+  font-size: 1.5rem;
+  line-height: 1.5;
+
+  & h1 {
+    color: var(--jacarta-700);
+  }
+
+  & p {
+    color: var(--jacarta-400);
+  }
+}

@@ -1,0 +1,40 @@
+.dashboardSection {
+  padding: 2rem;
+  gap: 1.5rem;
+
+  @media (min-width: 1024px) {
+    margin-left: 18rem;
+  }
+
+  .sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    & h3 {
+      color: var(--jacarta-700);
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    & p {
+      color: var(--jacarta-500);
+      margin-top: 1rem;
+    }
+
+    & a {
+      display: inline-block;
+      color: var(--teal-400);
+      margin-top: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  }
+}

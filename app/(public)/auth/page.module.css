@@ -1,0 +1,221 @@
+.authSection {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 8rem 1.5rem;
+
+  & .wrapper {
+    width: 100%;
+    max-width: 550px;
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  & .card {
+    position: relative;
+    overflow: hidden;
+    padding: 3rem;
+    border-radius: 5px;
+    background: var(--white);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  & .header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    & h1 {
+      font-size: 2.25rem;
+      color: var(--jacarta-700);
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+    }
+
+    & p {
+      color: var(--jacarta-500);
+      font-size: 0.9rem;
+    }
+
+    & img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  & .form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  & .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    & label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--jacarta-700);
+      font-size: 0.875rem;
+    }
+
+    & svg {
+      color: var(--purple-400);
+      font-size: 1.25rem;
+      width: 1.25rem;
+    }
+
+    & input {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      background: var(--jacarta-300);
+      border: 1px solid var(--jacarta-500);
+      border-radius: 5px;
+      color: var(--jacarta-700);
+      transition: all 0.3s;
+    }
+
+    & input:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(146, 60, 252, 0.5);
+    }
+  }
+
+  & .inputWrapper {
+    position: relative;
+
+    & input {
+      padding-right: 3rem;
+    }
+  }
+
+  & .eyeButton {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--jacarta-500);
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+      color: #8f3cfc;
+    }
+  }
+
+  & .fieldFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.75rem;
+
+    & label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+
+    & a {
+      color: #3ca6fc;
+      font-size: 0.85rem;
+      transition: color 0.3s;
+    }
+
+    & a:hover {
+      color: #5bb5fd;
+    }
+  }
+
+  & .submitBtn {
+    width: 100%;
+    padding: 1rem;
+    background: var(--purple-linear);
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 20px rgba(60, 166, 252, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.3s;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 8px 25px rgba(159, 0, 184, 0.6);
+      transform: scale(1.02);
+    }
+  }
+
+ 
+  & .signupRedirect {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #374151;
+
+    & p {
+      color: var(--jacarta-500);
+      font-size: 0.875rem;
+    }
+
+    & a {
+      color: #3ca6fc;
+      font-weight: 600;
+      margin-left: 0.25rem;
+      transition: color 0.3s;
+    }
+
+    & a:hover {
+      color: #5bb5fd;
+    }
+  }
+}
+
+/* 🔹 Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .authSection {
+    & .card {
+      padding: 2rem;
+    }
+
+    & .header {
+      & h1 {
+        font-size: 1.75rem;
+      }
+    }
+
+    & .iconBox {
+      width: 4rem;
+      height: 4rem;
+    }
+
+    & .wrapper {
+      padding: 1rem;
+    }
+  }
+}

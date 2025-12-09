@@ -1,0 +1,75 @@
+.accountCard {
+  background: var(--white);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.5rem;
+
+  & .mainHeader {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    & svg {
+      color: var(--jacarta-400);
+    }
+  }
+
+  & h1 {
+    font-size: 1rem;
+    color: var(--jacarta-500);
+  }
+
+  & .mainFigure {
+    color: var(--jacarta-500);
+    font-size: 1.3rem;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+  }
+  & .currency {
+    color: var(--jacarta-400);
+    font-weight: 500;
+  }
+
+  & .subSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.25rem;
+
+    & .subFigure {
+      color: var(--jacarta-500);
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    & .subTitle {
+      color: var(--jacarta-400);
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    & .locked {
+      display: flex;
+      align-items: center;
+      color: var(--jacarta-400);
+       gap: .2rem;
+
+      & svg {
+        font-size: .9rem;
+      }
+    }
+  }
+
+  & .buttonGroup {
+    display: flex;
+    gap: 1.5rem;
+  }
+}

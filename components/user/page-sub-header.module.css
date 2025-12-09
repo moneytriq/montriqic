@@ -1,0 +1,28 @@
+.pageSubHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+
+  & h2 {
+    text-transform: capitalize;
+    font-size: 1rem;
+    color: var(--jacarta-500);
+  }
+
+  & svg {
+    color: var(--jacarta-400);
+  }
+
+  & .inputField {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    & input {
+      border-radius: 10px;
+      border: 1px solid var(--jacarta-400);
+      transition: all 0.3s ease;
+    }
+  }
+}

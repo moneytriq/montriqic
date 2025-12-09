@@ -1,0 +1,121 @@
+/* components/Footer/Footer.module.css */
+.footer {
+  background: var(--white);
+  width: 100%;
+  padding-top: 96px;
+  padding-bottom: 48px;
+
+  & .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  & .grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 56px 28px;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(12, 1fr);
+    }
+  }
+
+  & .colLogo {
+    grid-column: span 6;
+    @media (min-width: 640px) {
+      grid-column: span 3;
+    }
+
+    @media (min-width: 768px) {
+      grid-column: span 4;
+    }
+  }
+
+  & .logo {
+    display: inline-block;
+    margin-bottom: 24px;
+    text-decoration: none;
+    font-size: 1.75rem;
+  }
+
+  & .description {
+    margin-bottom: 48px;
+    color: var(--jacarta-400);
+    font-size: 16px;
+  }
+
+  & .column {
+    grid-column: span 6;
+
+    @media (min-width: 640px) {
+      grid-column: span 3;
+    }
+
+    @media (min-width: 768px) {
+      grid-column: span 2;
+    }
+  }
+
+  & .column h3 {
+    margin-bottom: 24px;
+    font-size: 14px;
+    color: var(--jacarta-700); /* gray-900 */
+    font-weight: 600;
+    font-family: "Inter", sans-serif;
+  }
+
+  & .column ul {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  & .column a,
+  .column p {
+    color: var(--jacarta-400);
+    text-decoration: none;
+    transition: 0.2s ease;
+    cursor: pointer;
+  }
+
+  & .column a:hover {
+    color: var(--teal-400);
+  }
+  & .column p:hover {
+    color: var(--teal-400);
+  }
+
+  /* Bottom bar */
+  & .bottomBar {
+    padding-top: 32px;
+    padding-bottom: 32px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    font-size: 14px;
+    color: var(--jacarta-400);
+    @media (min-width: 640px) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  & .bottomBar ul {
+    display: flex;
+    gap: 16px;
+  }
+
+  & .bottomBar a {
+    color: var(--jacarta-400);
+    text-decoration: none;
+    transition: 0.2s ease;
+  }
+
+  & .bottomBar a:hover {
+    color: var(--teal-400);
+  }
+}

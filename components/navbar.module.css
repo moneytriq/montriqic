@@ -1,0 +1,116 @@
+.mainHeader {
+  width: 100%;
+
+  & .nav {
+    background: hsla(0, 0%, 100%, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    color: var(--jacarta-700);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+
+    & .brand {
+      font-weight: 700;
+      font-size: 1.125rem;
+    }
+    & .links {
+      display: flex;
+      gap: 1.25rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      @media (max-width: 1024px) {
+        display: none;
+      }
+    }
+    & .links a {
+      color: inherit;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    & .links li {
+      transition: all 0.3s ease;
+      &:hover {
+        color: var(--purple-400);
+      }
+    }
+    & .actions {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      & a {
+        @media (max-width: 1024px) {
+          display: none;
+        }
+      }
+    }
+  }
+
+  & .menu {
+    display: none;
+    cursor: pointer;
+    @media (max-width: 1024px) {
+      display: block;
+    }
+  }
+
+  & .mobileActionButtons {
+    margin-top: 2.5rem;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+  & .primary {
+    background: var(--purple-linear);
+    border: none;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    color: var(--white);
+    text-decoration: none;
+  }
+  & .ghost {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: var(--purple-400);
+    border-radius: 999px;
+    text-decoration: none;
+  }
+  & .mobileMenu {
+    display: block;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    width: 100%;
+    height: 100dvh;
+    background: var(--white);
+    padding: 5rem 0 0 2rem;
+
+    @media (min-width: 1024px) {
+      display: none;
+    }
+
+    & .links {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+
+      & a {
+        font-weight: 600;
+        text-decoration: none;
+        color: var(--jacarta-700);
+        transition: all 0.3s ease;
+
+        &:hover {
+          color: var(--purple-400);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+.pageHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 4rem;
+
+  & h1 {
+    color: var(--jacarta-700);
+    text-transform: capitalize;
+  }
+
+  & span {
+    color: var(--jacarta-400);
+    max-width: 500px;
+    line-height: 1.8;
+  }
+
+  & .banner {
+    text-transform: capitalize;
+  }
+
+  & .buttonGroup {
+    display: flex;
+    gap: 1.5rem;
+  }
+}
