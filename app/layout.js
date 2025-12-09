@@ -5,6 +5,7 @@ import MobileNavContextProvider from "@/store/mobileNav-context";
 import { createSupabaseServerClient } from "@/lib/db/supabaseServer";
 import UserContextProvider from "@/store/user-context";
 import { Toaster } from "sonner";
+import TawkTo from "@/components/ui/tawkto";
 
 export const metadata = {
   title: "Monetriq Inc",
@@ -57,6 +58,7 @@ export default async function RootLayout({ children }) {
         <UserContextProvider userDetails={userDetails}>
           <MobileNavContextProvider>
             <ProgressBar />
+            <TawkTo/>
             {children}
             <Toaster />
           </MobileNavContextProvider>
