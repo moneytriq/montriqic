@@ -8,7 +8,7 @@ export default function ExperienceGrid() {
     <>
       <div className={styles.inner}>
         {/* Left (Video) */}
-        <div className={styles.videoSection}>
+        {/* <div className={styles.videoSection}>
           <div className={styles.videoContainer}>
             <figure className={styles.videoFigure}>
               <video
@@ -22,7 +22,7 @@ export default function ExperienceGrid() {
               ></video>
             </figure>
           </div>
-        </div>
+        </div> */}
 
         {/* Right (Info) */}
         <div className={styles.infoSection}>

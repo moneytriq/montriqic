@@ -38,7 +38,7 @@ export default function HeroSection({ user }) {
         <div className={styles.leftContent}>
           <div className={styles.badge}>
             <img
-              src="https://worthoder.com/img/crypto-app/rocket_crypto_app.png"
+              src="/images/iphone-preview.png"
               alt=""
               width="20"
               height="20"
