@@ -15,11 +15,11 @@ export default function Section({
         <div className={styles.sectionHeader}>
           <div>
             <h3>{title}</h3>
-            {description[0].type !== "button" ? (
-              <p> {description[0].text}</p>
+            {description[0]?.type !== "button" ? (
+              <p> {description[0]?.text}</p>
             ) : (
-              <LinkWithProgress href={description[0].href}>
-                {description[0].text}
+              <LinkWithProgress href={description[0]?.href}>
+                {description[0]?.text}
               </LinkWithProgress>
             )}
           </div>

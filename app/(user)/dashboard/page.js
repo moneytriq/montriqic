@@ -157,7 +157,7 @@ export default async function DashboardPage() {
       <Section
         label="recent-activity"
         title="Recent Activity"
-        // description={[{ type: "button", href: "#", text: "See History" }]}
+        // description={[{ type: "text", text: "See History" }]}
       >
         <RecentActivitiesGrid
           activities={recentActivities}
