@@ -9,7 +9,7 @@ export default function AboutPage() {
     <>
       <Section label="about-company">
          <div className={styles.aboutInfoContainer}>
-          <h1>Terms and Conditions</h1>
+          <h1>Privacy Policy</h1>
           <p>{privacy.info}</p>
         </div>
       </Section>
