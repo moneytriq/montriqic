@@ -71,7 +71,7 @@ export default function ProfileSectionSelector() {
       <Section label="warning-cards">
         <WarningCard
           icon="warning"
-          text="Add a USDT address. This is the address where all your withdrwals will be sent to."
+          text="Add a USDT address. This is the address where all your withdrawals will be sent to."
           buttonText="Add Address"
           buttonActionType="modal"
           theme="yellow-400"

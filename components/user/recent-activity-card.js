@@ -61,7 +61,7 @@ export default function RecentActivityCard({ activity, baseUrl, label }) {
               : formatNumber(activity.amount)}{" "}
             USD
           </span>
-          <span className={styles.bottom}>{activity.amountInBTC} BTC</span>
+          {/* <span className={styles.bottom}>{activity.amountInBTC} BTC</span> */}
         </div>
       )}
 
