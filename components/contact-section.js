@@ -214,7 +214,8 @@ export default function ContactSection() {
               <div>
                 <span className={styles.infoTitle}>Email</span>
                 <a href="mailto:[email protected]" className={styles.infoEmail}>
-                  support@monetriq.com
+                  {" "}
+                  Info@monetriq.com
                 </a>
               </div>
             </div>
