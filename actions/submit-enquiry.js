@@ -1,4 +1,5 @@
 "use server";
+// import { sendEmail } from "@/lib/resend";
 import { sendEmail } from "@/lib/nodemailer";
 import xss from "xss";
 export default async function submitEnquiry(prevState, formData) {
@@ -46,7 +47,10 @@ export default async function submitEnquiry(prevState, formData) {
       message
     );
   } catch (error) {
+    console.log("nodemailer error:",error);
+    
     throw Error("Error sending mail");
+    // throw error;
   }
 
   return { success: true, errors: null };

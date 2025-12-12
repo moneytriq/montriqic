@@ -17,6 +17,7 @@ import React from "react";
 import SelectProfileUpdateContextProvider from "@/store/select-profile-update-context";
 import AdminWalletAddressContextProvider from "@/store/admin-wallet-context";
 import Section from "@/components/user/section";
+import ExchangeRateContextProvider from "@/store/exchange-rate-context";
 
 export default async function UserLayout({ children }) {
   const supabase = await createSupabaseServerClient({
@@ -35,6 +36,8 @@ export default async function UserLayout({ children }) {
   let transactions;
   let walletBalance;
   let adminWalletAddress;
+
+  let exchangeRate;
 
   if (user) {
     try {
@@ -103,6 +106,23 @@ export default async function UserLayout({ children }) {
       if (adminWalletError) throw adminWalletError;
 
       adminWalletAddress = adminWallet[0]?.wallet_address;
+
+      async function getExchangeData() {
+        const res = await fetch("https://open.er-api.com/v6/latest/USD", {
+          cache: "no-store",
+        });
+        const data = await res.json();
+
+        const eurRate = data?.rates?.EUR ?? 1;
+
+        return {
+          eurRate,
+        };
+      }
+
+      const eurRate = await getExchangeData();
+     
+      exchangeRate = eurRate;
     } catch (error) {
       console.error("Supabase error", error.message);
       return (
@@ -119,24 +139,26 @@ export default async function UserLayout({ children }) {
     <>
       <UserContextProvider userDetails={userDetails}>
         <AdminWalletAddressContextProvider address={adminWalletAddress}>
-          <KycDocumentTypeContextProvider>
-            <InvestmentPlansContextProvider plans={plans}>
-              <SelectProfileUpdateContextProvider>
-                <SelectPlanContextProvider>
-                  <WalletBalanceContextProvider balance={walletBalance}>
-                    <DashboardNavbar />
-                    <SideNav user={userDetails} />
-                    <MobileSideNav user={userDetails} />
-                    <TransactionsContextProvider defaultValue={transactions}>
-                      <ConfirmInvestmentModalContextProvider>
-                        {children}
-                      </ConfirmInvestmentModalContextProvider>
-                    </TransactionsContextProvider>
-                  </WalletBalanceContextProvider>
-                </SelectPlanContextProvider>
-              </SelectProfileUpdateContextProvider>
-            </InvestmentPlansContextProvider>
-          </KycDocumentTypeContextProvider>
+          <ExchangeRateContextProvider rate={exchangeRate}>
+            <KycDocumentTypeContextProvider>
+              <InvestmentPlansContextProvider plans={plans}>
+                <SelectProfileUpdateContextProvider>
+                  <SelectPlanContextProvider>
+                    <WalletBalanceContextProvider balance={walletBalance}>
+                      <DashboardNavbar />
+                      <SideNav user={userDetails} />
+                      <MobileSideNav user={userDetails} />
+                      <TransactionsContextProvider defaultValue={transactions}>
+                        <ConfirmInvestmentModalContextProvider>
+                          {children}
+                        </ConfirmInvestmentModalContextProvider>
+                      </TransactionsContextProvider>
+                    </WalletBalanceContextProvider>
+                  </SelectPlanContextProvider>
+                </SelectProfileUpdateContextProvider>
+              </InvestmentPlansContextProvider>
+            </KycDocumentTypeContextProvider>
+          </ExchangeRateContextProvider>
         </AdminWalletAddressContextProvider>
       </UserContextProvider>
     </>

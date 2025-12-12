@@ -16,6 +16,7 @@ import { WalletBalanceContext } from "@/store/wallet-balance-context";
 import { supabase } from "@/lib/db/supabaseClient";
 import { AdminWalletAddressContext } from "@/store/admin-wallet-context";
 import { formatNumber } from "@/util/util";
+import { ExchangeRateContext } from "@/store/exchange-rate-context";
 
 const {
   hamburger: Menu,
@@ -41,6 +42,9 @@ export default function DashboardNavbar() {
   const [isDropdown, setIsDropdown] = useState(false);
   const { walletBalance, setWalletBalance } = use(WalletBalanceContext);
   const { setAdminWalletAddress } = use(AdminWalletAddressContext);
+  const { exchangeRate } = use(ExchangeRateContext);
+
+  const balanceInEur = walletBalance * exchangeRate.eurRate;
 
   useEffect(() => {
     if (mobileNav) {
@@ -208,7 +212,12 @@ export default function DashboardNavbar() {
             <div className={styles.top}>
               <span className={styles.balanceTitle}>Account balance</span>
               <span className={styles.balance}>
-                <b>{formatNumber(walletBalance)}</b> USD
+                <span>
+                  <b>{formatNumber(walletBalance)}</b> USD
+                </span>
+                <span>
+                  <b>{formatNumber(balanceInEur)}</b> Eur
+                </span>
               </span>
 
               <span

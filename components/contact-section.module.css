@@ -110,6 +110,7 @@
   & .checkbox {
     width: 20px;
     height: 20px;
+    cursor: pointer;
   }
 
   & .checkboxLabel {
@@ -128,6 +129,7 @@
     font-weight: 600;
     border: none;
     transition: 0.2s ease;
+    cursor: pointer;
   }
 
   & .button:hover {

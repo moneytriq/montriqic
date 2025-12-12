@@ -63,7 +63,6 @@
       gap: 0.2rem;
 
       & > p {
-      
         text-transform: capitalize;
       }
 
@@ -75,7 +74,6 @@
 
         & > svg {
           font-size: 0.95rem;
-          
         }
       }
     }
@@ -105,10 +103,21 @@
     }
 
     & .balance {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
       color: var(--blue-500);
       font-size: 0.9rem;
       & b {
         font-size: 1.3rem;
+      }
+
+      & span:last-child {
+        color: var(--teal-400);
+        & b {
+          font-size: 0.9rem;
+          color: var(--teal-400);
+        }
       }
     }
 

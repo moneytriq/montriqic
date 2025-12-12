@@ -6,6 +6,7 @@ import { use, useActionState, useEffect, useState } from "react";
 import submitEnquiry from "@/actions/submit-enquiry";
 import { toast } from "sonner";
 import LinkWithProgress from "./ui/link-with-progress";
+import FormSubmitButton from "./ui/form-submit-button";
 
 export default function ContactSection() {
   const { mobileNav, setMobileNav } = use(MobileNavContext);
@@ -48,7 +49,7 @@ export default function ContactSection() {
         setErrors(errors);
         return;
       } catch (error) {
-        console.log(error.message);
+     
         toast.error("Failed to send message, try again");
       }
     },
@@ -181,13 +182,13 @@ export default function ContactSection() {
               </label>
             </div>
 
-            <button
+            <FormSubmitButton
               type="submit"
               id="contact-form-submit"
               className={styles.button}
             >
               Submit
-            </button>
+            </FormSubmitButton>
 
             <div id="contact-form-notice" className={styles.notice}></div>
           </form>
