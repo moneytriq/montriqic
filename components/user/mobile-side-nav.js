@@ -92,7 +92,11 @@ export default function MobileSideNav({ user }) {
             href: "/admin/withdraw",
           },
           { name: "KYC Requests", icon: "checkCircle", href: "/admin/kyc" },
-          { name: "Make Admin", icon: "makeAdmin", href: "/admin/make-admin" },
+          {
+            name: "Manage Users",
+            icon: "makeAdmin",
+            href: "/admin/manage-users",
+          },
         ];
 
   async function handleLogoutClick() {

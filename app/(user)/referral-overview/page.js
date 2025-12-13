@@ -67,9 +67,11 @@ export default async function ReferralOverviewPage() {
   } catch (error) {
     console.error("Supabase error", error.message);
     return (
-      <p className="data-fetching-error ">
-        Something Went Wrong, please try again
-      </p>
+      <Section>
+        <p className="data-fetching-error ">
+          Something Went Wrong, please try again
+        </p>
+      </Section>
     );
   }
 
@@ -107,7 +109,10 @@ export default async function ReferralOverviewPage() {
           },
         ]}
       >
-        <RecentActivitiesGrid activities={recentActivities}  baseUrl="/transactions"/>
+        <RecentActivitiesGrid
+          activities={recentActivities}
+          baseUrl="/transactions"
+        />
       </Section>
 
       <Section

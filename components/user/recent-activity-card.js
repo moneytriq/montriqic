@@ -3,6 +3,7 @@ import { iconsConfig } from "@/lib/icons/iconsConfig";
 import styles from "./recent-activity-card.module.css";
 import LinkWithProgress from "../ui/link-with-progress";
 import { formatDate, formatNumber } from "@/util/util";
+import { fontSize } from "@mui/system";
 
 const ArrowIn = iconsConfig["arrowIn"];
 const ArrowOut = iconsConfig["arrowOut"];
@@ -11,8 +12,14 @@ const Minus = iconsConfig["minus"];
 const FowardIcon = iconsConfig["arrowForward"];
 const KycIcon = iconsConfig["verifyUser"];
 const UserIcon = iconsConfig["user"];
+const EditIcon = iconsConfig["edit"];
 
-export default function RecentActivityCard({ activity, baseUrl, label }) {
+export default function RecentActivityCard({
+  activity,
+  baseUrl,
+  label,
+  isManageUsers,
+}) {
   const ActivityTypeIcon =
     activity.type === "deposit" || activity.type === "referral earning"
       ? ArrowIn
@@ -31,14 +38,18 @@ export default function RecentActivityCard({ activity, baseUrl, label }) {
         <div
           className={styles.iconBox}
           style={{
-            background: ["completed", "verified", "users"].includes(activity.status)
+            background: ["completed", "verified", "users"].includes(
+              activity.status
+            )
               ? "var(--green-300)"
               : "var(--orange-300)",
           }}
         >
           <ActivityTypeIcon
             style={{
-              color: ["completed", "verified", "users"].includes(activity.status)
+              color: ["completed", "verified", "users"].includes(
+                activity.status
+              )
                 ? "var(--green-400)"
                 : "var(--orange-400)",
             }}
@@ -75,6 +86,11 @@ export default function RecentActivityCard({ activity, baseUrl, label }) {
       {label !== "users" && (
         <LinkWithProgress href={`${baseUrl}/${activity.id}`}>
           <FowardIcon />
+        </LinkWithProgress>
+      )}
+      {isManageUsers === "admin" && (
+        <LinkWithProgress href={`${baseUrl}/${activity.id}`} >
+          <EditIcon style={{fontSize: "1.3rem"}}/>
         </LinkWithProgress>
       )}
     </div>

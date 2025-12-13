@@ -4,6 +4,7 @@ export default function RecentActivitiesGrid({
   activities = [],
   baseUrl = null,
   label = null,
+  isManageUsers =null
 }) {
   if (activities.length < 1) {
     return <p className="no-data">No activity yet.</p>;
@@ -16,6 +17,7 @@ export default function RecentActivitiesGrid({
           activity={activity}
           baseUrl={baseUrl}
           label={label}
+          isManageUsers={isManageUsers}
         />
       ))}
     </div>

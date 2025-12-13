@@ -86,7 +86,7 @@ export default function ContactSection() {
             assistance, do not hesitate to contact our specialists.
           </p>
 
-          <form action={formAction} id="contact-form" method="post">
+          <form action={formAction} id="contact-form">
             <div className={styles.row}>
               <div className={styles.inputGroup}>
                 <label htmlFor="name" className={styles.label}>
