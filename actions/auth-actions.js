@@ -96,6 +96,9 @@ export async function signup(refId, prevState, formData) {
       user_id: refId,
       referee_id: userData.user.id,
     });
+    await supabase.from("referral_earnings_ledger").insert({
+      user_id: userData.user.id,
+    });
   } catch (error) {
     console.error("Supabase", error.message);
     throw error;
