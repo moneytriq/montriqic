@@ -51,7 +51,7 @@ export default function WalletClientWrapper() {
         setConfirmInvestmentModal(false);
       } catch (error) {
         console.error(error.message);
-        toast.error("Something went wrong, please try agai later.");
+        toast.error("Something went wrong, please try again later.");
       }
     },
     {}

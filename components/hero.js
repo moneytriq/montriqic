@@ -38,9 +38,9 @@ export default function HeroSection({ user }) {
         <div className={styles.leftContent}>
           <div className={styles.badge}>
             <img
-              src="/images/iphone-preview.png"
+              src="/images/rocket.png"
               alt=""
-              width="20"
+              width="30"
               height="20"
             />
             <span>#1 TRADING SERVICES FIRM</span>

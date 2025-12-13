@@ -16,7 +16,7 @@ export default function AddressHolder({
       <div className={styles.account}>
         <Icon />
 
-        {walletType && <span className={styles.walletType}>{walletType}</span>}
+        {walletType && <span className={styles.walletType}>{walletType} TRC20</span>}
 
         {!subtitle ? (
           <div className={styles.depositAddressContainer}>
