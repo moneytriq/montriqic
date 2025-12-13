@@ -31,7 +31,7 @@ const links = [
   { name: "Investment", icon: "invest", href: "/investment" },
   { name: "Our Plans", icon: "plans", href: "/our-plans" },
   { name: "Profile", icon: "user", href: "/profile" },
-  // { name: "Referral", icon: "share", href: "/referral-overview" },
+  { name: "Referral", icon: "share", href: "/referral-overview" },
 ];
 
 const quickLinks = [

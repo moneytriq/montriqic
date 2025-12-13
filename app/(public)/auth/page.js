@@ -13,13 +13,16 @@ const EyeIcon = iconsConfig["eye"];
 const EmailIcon = iconsConfig["email"];
 const LockIcon = iconsConfig["locked"];
 const EyeOffIcon = iconsConfig["eyeOff"];
+const WarningIcon = iconsConfig["warning"];
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
   const mode = searchParams.get("mode") || "login";
+  const refId = searchParams.get("refId") || "";
   const { mobileNav, setMobileNav } = use(MobileNavContext);
+  const [showNoReg, setShowNoReg] = useState(false);
 
   useEffect(() => {
     if (mobileNav) {
@@ -61,7 +64,7 @@ export default function Login() {
   const [formState, formAction] = useActionState(
     async (prevState, formData) => {
       try {
-        const res = await authAction(prevState, formData);
+        const res = await authAction(refId, prevState, formData);
 
         if (!res.errors) {
           router.replace("/dashboard");
@@ -75,29 +78,33 @@ export default function Login() {
           return newErrors;
         });
       } catch (error) {
-        
         if (error.message === "User already registered") {
           toast.error(`${error.message}! Sign in instead`);
           router.push("/auth");
           return;
         }
+
         if (error.message === "Invalid login credentials") {
           toast.error(`${"Invalid email or password"}`);
           return;
         }
-        if (error.message === "Email not confirmed") {
-          toast.error(
-            `${error.message} yet! Please confirm your email address to proceed`
-          );
+
+        if (error.message === "No ref") {
+          setShowNoReg(true);
           return;
         }
+
+        if (error.message === "Invalid referal link") {
+          toast.error(error.message);
+          return;
+        }
+
         if (mode === "login") {
           toast.error("Login failed, please try again");
         } else {
           toast.error("Failed to create account, please try again");
         }
-
-        console.log("auth error",error);
+        console.log("auth error", error);
       }
     },
     {}
@@ -120,6 +127,13 @@ export default function Login() {
               </>
             )}
           </div>
+
+          {showNoReg && (
+            <div className={styles.noRegError}>
+              <WarningIcon /> New registration is not allowed. Please feel free
+              to contact us for more information.
+            </div>
+          )}
 
           <form className={styles.form} action={formAction}>
             <div id="email-field" className={styles.field}>

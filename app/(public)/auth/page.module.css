@@ -160,7 +160,6 @@
     }
   }
 
- 
   & .signupRedirect {
     text-align: center;
     margin-top: 2rem;
@@ -181,6 +180,22 @@
 
     & a:hover {
       color: #5bb5fd;
+    }
+  }
+
+  & .noRegError {
+    display: flex;
+    gap: 0.5rem;
+    color: var(--red-400);
+    font-size: 1rem;
+    padding: 1rem;
+    background: #d83d3d5d;
+    border: 1px solid var(--red-400);
+    border-radius: 5px;
+    margin-bottom: 2rem;
+    & svg {
+      color: var(--red-400);
+      font-size: 1rem;
     }
   }
 }

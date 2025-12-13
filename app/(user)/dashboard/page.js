@@ -134,6 +134,8 @@ export default async function DashboardPage() {
   isWarningSection =
     userDetails.kycStatus !== "verified" || !userDetails.walletAddress;
 
+    const refLink = process.env.NEXT_PUBLIC_SITE_URL + `/auth?mode=signup&refId=${user.id}`
+
   return (
     <>
       <Section label="page-header">
@@ -164,15 +166,15 @@ export default async function DashboardPage() {
           baseUrl="/transactions"
         />
       </Section>
-      {/* <Section
+      <Section
         label="referral-section"
         title="Refer Us & Earn"
         description={[
           { type: "text", text: "Use the link below to invite your friends" },
         ]}
       >
-        <ReferralInviteCard />
-      </Section> */}
+        <ReferralInviteCard value={refLink} />
+      </Section>
       <Section label="footer-section">
         <DashboardFooter />
       </Section>

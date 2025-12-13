@@ -10,6 +10,7 @@ const Plus = iconsConfig["plus"];
 const Minus = iconsConfig["minus"];
 const FowardIcon = iconsConfig["arrowForward"];
 const KycIcon = iconsConfig["verifyUser"];
+const UserIcon = iconsConfig["user"];
 
 export default function RecentActivityCard({ activity, baseUrl, label }) {
   const ActivityTypeIcon =
@@ -17,6 +18,8 @@ export default function RecentActivityCard({ activity, baseUrl, label }) {
       ? ArrowIn
       : activity.type === "kyc"
       ? KycIcon
+      : activity.type === "users"
+      ? UserIcon
       : ArrowOut;
   const TransactionTypeIcon = activity.type === "deposit" ? Plus : Minus;
 
@@ -28,14 +31,14 @@ export default function RecentActivityCard({ activity, baseUrl, label }) {
         <div
           className={styles.iconBox}
           style={{
-            background: ["completed", "verified"].includes(activity.status)
+            background: ["completed", "verified", "users"].includes(activity.status)
               ? "var(--green-300)"
               : "var(--orange-300)",
           }}
         >
           <ActivityTypeIcon
             style={{
-              color: ["completed", "verified"].includes(activity.status)
+              color: ["completed", "verified", "users"].includes(activity.status)
                 ? "var(--green-400)"
                 : "var(--orange-400)",
             }}
@@ -46,13 +49,17 @@ export default function RecentActivityCard({ activity, baseUrl, label }) {
           <p>{activity.title}</p>
           <div>
             <span>{formatDate(activity.date)}</span>
-            <span className={styles.banner}></span>
-            <span className={styles.status}>{activity.status}</span>
+            {label !== "users" && (
+              <>
+                <span className={styles.banner}></span>
+                <span className={styles.status}>{activity.status}</span>
+              </>
+            )}
           </div>
         </div>
       </div>
 
-      {label !== "admin-kyc-request-list" && (
+      {label !== "admin-kyc-request-list" && label !== "users" && (
         <div className={styles.right}>
           <span className={styles.top}>
             <TransactionTypeIcon />{" "}
@@ -65,9 +72,11 @@ export default function RecentActivityCard({ activity, baseUrl, label }) {
         </div>
       )}
 
-      <LinkWithProgress href={`${baseUrl}/${activity.id}`}>
-        <FowardIcon />
-      </LinkWithProgress>
+      {label !== "users" && (
+        <LinkWithProgress href={`${baseUrl}/${activity.id}`}>
+          <FowardIcon />
+        </LinkWithProgress>
+      )}
     </div>
   );
 }
