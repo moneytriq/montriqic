@@ -66,38 +66,45 @@ export default function Login() {
       try {
         const res = await authAction(refId, prevState, formData);
 
-        if (!res.errors) {
-          router.replace("/dashboard");
-          toast.success(res.message);
-
-          return {};
-        }
-
-        setErrors((prev) => {
-          const newErrors = { ...prev, ...res.errors };
-          return newErrors;
-        });
-      } catch (error) {
-        if (error.message === "User already registered") {
-          toast.error(`${error.message}! Sign in instead`);
-          router.push("/auth");
+        if (res.errors) {
+          setErrors((prev) => {
+            const newErrors = { ...prev, ...res.errors };
+            return newErrors;
+          });
           return;
-        }
-
-        if (error.message === "Invalid login credentials") {
-          toast.error(`${"Invalid email or password"}`);
-          return;
-        }
-
-        if (error.message === "No ref") {
+        } else if (res.authError && res.authError === "no ref") {
           setShowNoReg(true);
           return;
-        }
-
-        if (error.message === "Invalid referal link") {
-          toast.error(error.message);
+        } else if (res.authError && res.authError !== "no ref") {
+          toast.error(res.authError);
           return;
         }
+
+        router.replace("/dashboard");
+        toast.success(res.message);
+
+        return {};
+      } catch (error) {
+        // if (error.message === "User already registered") {
+        //   toast.error(`${error.message}! Sign in instead`);
+        //   router.push("/auth");
+        //   return;
+        // }
+
+        // if (error.message === "Invalid login credentials") {
+        //   toast.error(`${"Invalid email or password"}`);
+        //   return;
+        // }
+
+        // if (error.message === "No ref") {
+        //   setShowNoReg(true);
+        //   return;
+        // }
+
+        // if (error.message === "Invalid referal link") {
+        //   toast.error(error.message);
+        //   return;
+        // }
 
         if (mode === "login") {
           toast.error("Login failed, please try again");

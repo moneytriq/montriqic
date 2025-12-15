@@ -35,7 +35,11 @@ export async function signup(refId, prevState, formData) {
   console.log("REFID", refId);
 
   if (!refId) {
-    throw new Error("No ref");
+    return {
+      success: false,
+      message: null,
+      authError: "no ref",
+    };
   }
 
   const cookieStore = await cookies();
@@ -60,7 +64,11 @@ export async function signup(refId, prevState, formData) {
       .eq("user_id", refId);
 
     if (count < 1) {
-      throw new Error("Invalid referal link");
+      return {
+        success: false,
+        message: null,
+        authError: "Invalid referal link",
+      };
     }
 
     const { data: userRaw, error: listError } =
@@ -73,7 +81,11 @@ export async function signup(refId, prevState, formData) {
     const user = users.find((u) => u.email === email);
 
     if (user) {
-      throw new Error("User already registered");
+      return {
+        success: false,
+        message: null,
+        authError: "User already registered! Sign in instead",
+      };
     }
 
     const { data: userData, error: signUpError } = await supabase.auth.signUp(
@@ -107,6 +119,7 @@ export async function signup(refId, prevState, formData) {
   return {
     success: true,
     message: "Account created successfully.",
+    authError: null,
   };
 }
 
@@ -156,14 +169,25 @@ export async function signin(refId, prevState, formData) {
     const user = users.find((u) => u.email === email);
 
     if (!user) {
-      throw new Error("Invalid login credentials");
+      return {
+        success: false,
+        message: null,
+        authError: "Invalid email or password",
+      };
     }
 
     const { error: signinError } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
-    if (signinError) throw signinError;
+
+    if (signinError) {
+      return {
+        success: false,
+        message: null,
+        authError: "Invalid email or password",
+      };
+    }
   } catch (error) {
     console.error("Supabase", error.message);
     throw error;
@@ -174,5 +198,6 @@ export async function signin(refId, prevState, formData) {
   return {
     success: true,
     message: "Login successful",
+    authError: null,
   };
 }
