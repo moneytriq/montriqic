@@ -57,6 +57,7 @@ export default function UploadDocumentForm() {
     }));
 
     console.log(images.mainDoc.size);
+      e.target.value = "";
   }
 
   function handleModalBackDropClick(booleanValue) {
@@ -124,7 +125,7 @@ export default function UploadDocumentForm() {
               accept="image/*"
               // hidden
               style={{ position: "absolute", opacity: 0 }}
-              onChange={(e) => {
+              onInput={(e) => {
                 handleImageChange(e, "mainDoc");
               }}
             />
@@ -151,7 +152,7 @@ export default function UploadDocumentForm() {
               accept="image/*"
               // hidden
               style={{ position: "absolute", opacity: 0 }}
-              onChange={(e) => {
+              onInput={(e) => {
                 handleImageChange(e, "selfieDoc");
               }}
             />
