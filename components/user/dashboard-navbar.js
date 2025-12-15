@@ -175,7 +175,7 @@ export default function DashboardNavbar() {
                 a.type.localeCompare(b.type, undefined, { sensitivity: "base" })
               );
             }
-            
+
             const filteredWallets = prev.filter(
               (address) => address.id !== payload.new.id
             );
@@ -210,7 +210,9 @@ export default function DashboardNavbar() {
         ) : (
           <Close className={styles.menu} onClick={() => setMobileNav(false)} />
         )}
-        <div className={styles.brand}>{site.brand}</div>
+        <LinkWithProgress href="/" className={styles.brand}>
+          {site.brand}
+        </LinkWithProgress>
       </div>
 
       <div className={styles.actions}>

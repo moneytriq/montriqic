@@ -23,8 +23,10 @@
   }
 
   & .brand {
+    color: var(--jacarta-700);
     font-weight: 700;
     font-size: 1.125rem;
+    text-decoration: none;
   }
 
   & .actions {
@@ -32,6 +34,7 @@
     gap: 2rem;
     align-items: center;
     position: relative;
+    max-width: 150px;
   }
 
   & .menu {
@@ -56,6 +59,12 @@
     & .displayName {
       color: var(--jacarta-700);
       text-transform: capitalize;
+          word-break: break-all;
+        display: -webkit-box;
+        line-clamp: 1;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
     & > span {
       display: flex;
