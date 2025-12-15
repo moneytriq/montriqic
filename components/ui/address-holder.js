@@ -3,31 +3,37 @@ import styles from "./address-holder.module.css";
 import CopyButton from "./copy-button";
 
 export default function AddressHolder({
+  label = null,
   title,
   subtitle = null,
-  value,
   walletType = null,
+  walletNetwork = null,
+  value,
   icon,
 }) {
   const Icon = iconsConfig[icon];
   return (
-    <div className={styles.addressField}>
+    <div className={styles.addressField} style={{ overflow: "hidden" }}>
       <label>{title}</label>
       <div className={styles.account}>
         <Icon />
 
-        {walletType && <span className={styles.walletType}>{walletType} TRC20</span>}
-
-        {!subtitle ? (
-          <div className={styles.depositAddressContainer}>
-            <span>{value}</span>
-           
-            <CopyButton text={value} />
+        {walletType && (
+          <div className={styles.walletType}>
+            {walletType} {walletNetwork}
           </div>
-        ) : (
+        )}
+
+        {label !== "address" ? (
           <div>
             <span>{subtitle}</span>
             <span>{value}</span>
+          </div>
+        ) : (
+          <div className={styles.depositAddressContainer}>
+            <span>{value}</span>
+
+            <CopyButton text={value} />
           </div>
         )}
       </div>

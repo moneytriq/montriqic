@@ -4,7 +4,10 @@ import { createContext, useState } from "react";
 
 export const AdminWalletAddressContext = createContext();
 
-export default function AdminWalletAddressContextProvider({ children , address = ""}) {
+export default function AdminWalletAddressContextProvider({
+  children,
+  address = "",
+}) {
   const [adminWalletAddress, setAdminWalletAddress] = useState(address);
 
   const value = {
@@ -12,5 +15,9 @@ export default function AdminWalletAddressContextProvider({ children , address =
     setAdminWalletAddress,
   };
 
-  return <AdminWalletAddressContext value={value}>{children}</AdminWalletAddressContext>;
+  return (
+    <AdminWalletAddressContext value={value}>
+      {children}
+    </AdminWalletAddressContext>
+  );
 }

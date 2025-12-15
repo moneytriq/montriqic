@@ -20,6 +20,8 @@
     padding: 1rem;
     border: var(--card-border);
     border-radius: 5px;
+    position: relative;
+  
 
     & svg {
       color: var(--jacarta-400);
@@ -44,10 +46,12 @@
     font-size: 0.7rem;
     color: var(--jacarta-500);
     font-weight: 600;
+    position: relative;
+    text-transform: uppercase;
   }
 
   .depositAddressContainer {
-    position: relative;
+  
     width: 100%;
 
     & > span {
@@ -74,6 +78,33 @@
     & svg {
       font-size: 1rem;
       color: var(--teal-400);
+    }
+  }
+
+  & .selectWaletDropDown {
+    position: absolute;
+    background: var(--white);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    top: 0;
+    border-radius: 5px;
+    box-shadow: 0 10px 30px #00000080;
+    min-height: 148px;
+    z-index: 2;
+    & li {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: .5rem;
+      color: var(--jacarta-500);
+      padding: 0.5rem 1rem;
+      border-bottom: var(--card-border);
+      transition: all 0.3s ease;
+      cursor: pointer;
+
+      &:hover {
+        background: var(--jacarta-300);
+      }
     }
   }
 }

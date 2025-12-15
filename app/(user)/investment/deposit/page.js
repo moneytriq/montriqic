@@ -2,6 +2,7 @@ import DashboardFooter from "@/components/user/dashboard-footer";
 import DepositForm from "@/components/user/deposit-form";
 import PageHeader from "@/components/user/pageHeader";
 import Section from "@/components/user/section";
+import UserDepositForm from "@/components/user/user-deposit-form";
 import React from "react";
 
 export default function DepositPage() {
@@ -15,7 +16,7 @@ export default function DepositPage() {
         />
       </Section>
       <Section label="page-header">
-        <DepositForm />
+        <UserDepositForm />
       </Section>
       <Section label="footer-section">
         <DashboardFooter prompt="By continuing, you aggree to our terms and conditions" />

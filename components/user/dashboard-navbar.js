@@ -41,7 +41,9 @@ export default function DashboardNavbar() {
   const { user, setUser } = use(UserContext);
   const [isDropdown, setIsDropdown] = useState(false);
   const { walletBalance, setWalletBalance } = use(WalletBalanceContext);
-  const { setAdminWalletAddress } = use(AdminWalletAddressContext);
+  const { adminWalletAddress, setAdminWalletAddress } = use(
+    AdminWalletAddressContext
+  );
   const { exchangeRate } = use(ExchangeRateContext);
 
   const balanceInEur = walletBalance * exchangeRate.eurRate;
@@ -163,7 +165,34 @@ export default function DashboardNavbar() {
         },
         (payload) => {
           console.log("New admin wallet details:", payload);
-          setAdminWalletAddress(payload.new.wallet_address);
+          setAdminWalletAddress((prev) => {
+            if (!payload.new.id) {
+              const filteredWallets = prev.filter(
+                (address) => address.id !== payload.old.id
+              );
+
+              return filteredWallets.sort((a, b) =>
+                a.type.localeCompare(b.type, undefined, { sensitivity: "base" })
+              );
+            }
+            
+            const filteredWallets = prev.filter(
+              (address) => address.id !== payload.new.id
+            );
+
+            const newWallets = [
+              ...filteredWallets,
+              {
+                id: payload.new.id,
+                type: payload.new.type,
+                address: payload.new.wallet_address,
+                network: payload.new.network,
+              },
+            ].sort((a, b) =>
+              a.type.localeCompare(b.type, undefined, { sensitivity: "base" })
+            );
+            return newWallets;
+          });
         }
       )
       .subscribe();

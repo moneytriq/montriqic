@@ -1,30 +1,70 @@
 "use server";
 
 import { supabase } from "@/lib/db/supabaseClient";
+import { revalidatePath } from "next/cache";
 
 export async function updateAdminWalletAddress(
-  fieldName,
-  newValue,
+  actionMode,
+  seletedAddress,
   prevState,
   formData
 ) {
-  if (newValue?.trim().length < 8) {
+  const address = formData.get("address")?.toLowerCase();
+  const network = formData.get("network")?.toLowerCase();
+  const type = formData.get("type")?.toLowerCase();
+
+  if (address?.trim().length < 8) {
     return {
       success: false,
-      error: `${fieldName} too short`,
+      error: `Invalid wallet address`,
     };
   }
-  const value = newValue;
 
-  const { data: walletData, error: walletDataError } = await supabase
-    .from("admin_wallet")
-    .select("*");
-  if (walletDataError) throw walletDataError;
+  if (actionMode !== "update") {
+    if (type?.trim().length < 3) {
+      return {
+        success: false,
+        error: `Invalid Wallet Type`,
+      };
+    }
+    if (network?.trim().length < 3) {
+      return {
+        success: false,
+        error: `Invalid Network`,
+      };
+    }
 
-  if (walletData.length < 1) {
+    const { count, error: countError } = await supabase
+      .from("admin_wallet")
+      .select("*", { count: "exact", head: true });
+
+    if (countError) throw countError;
+
+    if (count >= 6) {
+      return {
+        success: false,
+        error: `Maximum number of wallets reached. You cannot add more than 6 wallets.`,
+      };
+    }
+
+    const { data: wallet, error: walletError } = await supabase
+      .from("admin_wallet")
+      .select("*")
+      .eq("type", type)
+      .eq("network", network);
+
+    if (walletError) throw walletError;
+
+    if (wallet.length > 0) {
+      return {
+        success: false,
+        error: `You cannot add the same wallet with the same network more than once.`,
+      };
+    }
+
     const { data: insertWallet, error: insertWalletError } = await supabase
       .from("admin_wallet")
-      .insert({ [fieldName]: value });
+      .insert({ wallet_address: address, type: type, network: network });
 
     if (insertWalletError) throw insertWalletError;
     return { success: true, error: null };
@@ -32,9 +72,27 @@ export async function updateAdminWalletAddress(
 
   const { data: updateWallet, error: updateWalletError } = await supabase
     .from("admin_wallet")
-    .update({ [fieldName]: value })
-    .eq("id", walletData[0].id);
+    .update({ wallet_address: address })
+    .eq("id", seletedAddress.id);
 
   if (updateWalletError) throw updateWalletError;
+  revalidatePath("/", "layout");
+  return { success: true, error: null };
+}
+
+export async function removeWallet(walletId) {
+  const { count, error: countError } = await supabase
+    .from("admin_wallet")
+    .select("*", { count: "exact", head: true })
+    .eq("id", walletId);
+
+  if (countError) throw countError;
+
+  if (count < 1) {
+    return { success: false, error: "Address does not exist" };
+  }
+
+  await supabase.from("admin_wallet").delete().eq("id", walletId);
+  revalidatePath("/", "layout");
   return { success: true, error: null };
 }

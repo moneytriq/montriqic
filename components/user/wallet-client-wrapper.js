@@ -1,26 +1,37 @@
 "use client";
 import React, { use, useActionState, useEffect, useState } from "react";
-import AddressHolder from "../ui/address-holder";
 import TextButton from "../ui/text-button";
 import { ConfirmInvestmentModalContext } from "@/store/confirm-investment-modal-context";
 import WarningCard from "./warning-card";
 import Section from "@/components/user/section";
 import { AnimatePresence } from "framer-motion";
-import { updateAdminWalletAddress } from "@/actions/update-admin-wallet-address";
+import {
+  removeWallet,
+  updateAdminWalletAddress,
+} from "@/actions/update-admin-wallet-address";
 import { UserContext } from "@/store/user-context";
 import { AdminWalletAddressContext } from "@/store/admin-wallet-context";
 import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
 import Modal from "../ui/modal";
 import styles from "./profile-section-selector.module.css";
+import WalletAddressHolder from "../ui/wallet-address-holder";
+import { SelectWalletContext } from "@/store/select-wallet-context";
 
 export default function WalletClientWrapper() {
   const { user } = use(UserContext);
+  const { selectedWallet } = use(SelectWalletContext);
   const { adminWalletAddress: walletAddress } = use(AdminWalletAddressContext);
   const { confirmInvestmentModal, setConfirmInvestmentModal } = use(
     ConfirmInvestmentModalContext
   );
-  const [modalInput, setModalInput] = useState(walletAddress || "");
+  const [actionMode, setActionMode] = useState("update");
+  const [modalInput, setModalInput] = useState({
+    id: selectedWallet.id || "",
+    type: selectedWallet.type || "",
+    address: selectedWallet.address || "",
+    network: selectedWallet.network || "",
+  });
 
   const { pending } = useFormStatus();
 
@@ -28,15 +39,32 @@ export default function WalletClientWrapper() {
     if (confirmInvestmentModal) setConfirmInvestmentModal(false);
   }, []);
 
-  function handleModalInputChange(e) {
-    setModalInput(e.target.value);
+  function handleModalInputChange(e, field) {
+    setModalInput((prev) => ({
+      ...prev,
+      [field]: e.target.value,
+    }));
+  }
+  async function handleRemoveClick() {
+    try {
+      const res = await removeWallet(selectedWallet.id);
+
+      if (res.error) {
+        toast.error(res.error);
+      }
+
+      toast.success("Wallet removed successfully");
+    } catch (error) {
+      console.error("errr", error.message);
+      toast.error("Could not remove wallet. Please try again later");
+    }
   }
 
   const [formState, formAction] = useActionState(
     async (prevState, formData) => {
       try {
         const res = await updateAdminWalletAddress(
-          "wallet_address",
+          actionMode,
           modalInput,
           prevState,
           formData
@@ -44,13 +72,17 @@ export default function WalletClientWrapper() {
 
         if (res.error) {
           toast.error(res.error);
-          return;
+          return res;
         }
 
-        toast.success(`Wallet address updated successfully.`);
+        toast.success(`Wallet updated successfully.`);
         setConfirmInvestmentModal(false);
+        return res;
       } catch (error) {
-        console.error(error.message);
+        if (actionMode === "add") {
+          toast.error("Something went wrong, or wallet type not supported.");
+          return;
+        }
         toast.error("Something went wrong, please try again later.");
       }
     },
@@ -80,30 +112,68 @@ export default function WalletClientWrapper() {
         description={[
           {
             type: "text",
-            text: "This is the USDT address where investors will deposit funds to.",
+            text: "These are addresses where investors will deposit funds to. You can add a maximum of 6 wallets.",
           },
         ]}
       >
-        {walletAddress ? (
+        {walletAddress.length > 0 ? (
           <>
-            <AddressHolder
+            <WalletAddressHolder
               title="Withdraw Address"
               value={walletAddress}
-              walletType="USDT"
               icon="accountBalance"
             />
-            <TextButton onClick={() => setConfirmInvestmentModal(true)}>
-              Change
-            </TextButton>
+            <div style={{ display: "flex", gap: "2rem" }}>
+              <TextButton
+                onClick={() => {
+                  setActionMode("update");
+                  setConfirmInvestmentModal(true);
+                  setModalInput({
+                    id: selectedWallet.id,
+                    type: selectedWallet.type || "",
+                    address: selectedWallet.address || "",
+                    network: selectedWallet.network || "",
+                  });
+                }}
+              >
+                Change
+              </TextButton>
+              <TextButton
+                style={{ color: "var(--red-400)" }}
+                onClick={handleRemoveClick}
+              >
+                Remove Wallet
+              </TextButton>
+            </div>
+            {walletAddress.length < 6 && (
+              <TextButton
+                style={{ marginLeft: "2rem" , marginTop: "2rem"}}
+                onClick={() => {
+                  setConfirmInvestmentModal(true);
+                  setActionMode("add");
+                  setModalInput({
+                    id: "",
+                    type: "",
+                    address: "",
+                    network: "",
+                  });
+                }}
+              >
+                Add New Wallet
+              </TextButton>
+            )}
           </>
         ) : (
           <WarningCard
             icon="warning"
-            text="Add a USDT address. This is the address where investors will deposit funds to."
+            text="Add a wallet address where investors will deposit funds to."
             buttonText="Add Address"
             buttonActionType="modal"
             theme="yellow-400"
-            onClick={() => setConfirmInvestmentModal(true)}
+            onClick={() => {
+              setActionMode("add");
+              setConfirmInvestmentModal(true);
+            }}
           />
         )}
       </Section>
@@ -118,7 +188,20 @@ export default function WalletClientWrapper() {
               action={formAction}
               className={styles.profileSelectorModalContent}
             >
-              <h1> {walletAddress ? "Change" : "Set"} Deposit Address</h1>
+              {walletAddress.length > 0 && actionMode === "update" ? (
+                <h1>
+                  Change Deposit Address for <span>{selectedWallet.type}</span>{" "}
+                  <span>{selectedWallet.network}</span>
+                </h1>
+              ) : (
+                <>
+                  <h1>Add New Deposit Address</h1>
+                  <p>
+                    These are the only supported wallet types: 'btc', 'usdt',
+                    'xrp', 'eth', 'trx', 'sol'.
+                  </p>
+                </>
+              )}
 
               <div className={styles.field}>
                 <label htmlFor="address">Address</label>
@@ -127,11 +210,40 @@ export default function WalletClientWrapper() {
                   type="text"
                   id="address"
                   name="address"
-                  value={modalInput}
-                  onChange={handleModalInputChange}
+                  value={modalInput.address}
+                  onChange={(e) => handleModalInputChange(e, "address")}
                   placeholder="Enter Address"
                 />
               </div>
+              {walletAddress.length < 1 || actionMode !== "update" ? (
+                <>
+                  <div className={styles.field}>
+                    <label htmlFor="type">Type</label>
+
+                    <input
+                      type="text"
+                      id="type"
+                      name="type"
+                      value={modalInput.type}
+                      onChange={(e) => handleModalInputChange(e, "type")}
+                      placeholder="e.g BTC, USDT, ..."
+                    />
+                  </div>
+
+                  <div className={styles.field}>
+                    <label htmlFor="network">Network</label>
+
+                    <input
+                      type="text"
+                      id="network"
+                      name="network"
+                      value={modalInput.network}
+                      onChange={(e) => handleModalInputChange(e, "network")}
+                      placeholder="e.g TRC20"
+                    />
+                  </div>
+                </>
+              ) : null}
 
               {buttons && (
                 <div className={styles.buttonGroup}>

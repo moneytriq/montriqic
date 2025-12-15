@@ -8,22 +8,20 @@ import AddressHolder from "../ui/address-holder";
 import { WalletBalanceContext } from "@/store/wallet-balance-context";
 import { formatNumber } from "@/util/util";
 import { toast } from "sonner";
-import { makeDeposit } from "@/actions/deposit-action";
+
 import { useRouter } from "next/navigation";
 import { UserContext } from "@/store/user-context";
 import { makeWithdrawal } from "@/actions/withdraw-action";
-import { AdminWalletAddressContext } from "@/store/admin-wallet-context";
+
 
 export default function DepositForm({ label = null }) {
-  const isWithdrawForm = label === "withdraw";
+ 
   const router = useRouter();
   const { user } = use(UserContext);
   const { confirmInvestmentModal, setConfirmInvestmentModal } = use(
     ConfirmInvestmentModalContext
   );
   const { walletBalance } = use(WalletBalanceContext);
-
-  const { adminWalletAddress } = use(AdminWalletAddressContext);
 
   const [amountInput, setAmountInput] = useState("");
 
@@ -37,29 +35,6 @@ export default function DepositForm({ label = null }) {
     setAmountInput(e.target.value);
   }
 
-  async function handleConfirmDepositClick() {
-    setIsLoading(true);
-    try {
-      const res = await makeDeposit(user.id, user.fullName, amountInput);
-
-      if (res.error) {
-        toast.error(res.error);
-        return;
-      }
-      toast.success("Deposit Successfull. Awaiting confirmation");
-
-      setConfirmInvestmentModal(false);
-
-      router.replace("/dashboard#recent-activity");
-
-      return;
-    } catch (error) {
-      console.error("Supabase Error", error);
-      toast.error("Something went wrong, please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  }
   async function handleConfirmWithdrawClick() {
     setIsLoading(true);
     try {
@@ -84,16 +59,12 @@ export default function DepositForm({ label = null }) {
     }
   }
 
-  const clickAction = isWithdrawForm
-    ? handleConfirmWithdrawClick
-    : handleConfirmDepositClick;
-
   return (
     <>
       <form action="#" className={styles.investmentFormContainer}>
         <div className={styles.field}>
           <label htmlFor="investment-amount">
-            Enter {isWithdrawForm ? "Withdraw" : "Deposit"} Amount
+            Enter Withdraw Amount
           </label>
           <div className={styles.amountInputWrapper}>
             <input
@@ -112,62 +83,40 @@ export default function DepositForm({ label = null }) {
         </div>
 
         <AddressHolder
-          title={isWithdrawForm ? "Withdraw Account" : "Deposit Account"}
+          title="Withdraw Account"
           subtitle="Main Balance"
           value={`Current Balance ${formatNumber(walletBalance)} USD`}
           icon="accountBalance"
         />
 
-        {isWithdrawForm ? (
-          <button
-            type="button"
-            onClick={() => {
-              if (!amountInput) {
-                toast.error("Please input the amount you wish to Withdraw.");
-                return;
-              } else if (amountInput < 10) {
-                toast.error("You can only withdraw a minimum of 10 USD.");
-                return;
-              } else if (amountInput > walletBalance) {
-                toast.error(
-                  "You do not have sufficient funds in your wallet to make this withdrawal."
-                );
-                return;
-              } else if (user.kycStatus !== "verified") {
-                toast.error(
-                  "You can only withdraw funds after you complete your KYC."
-                );
-                return;
-              } else if (!user.walletAddress) {
-                toast.error("You have not added a USDT withdraw address yet.");
-                return;
-              }
-              setConfirmInvestmentModal(true);
-            }}
-          >
-            Continue to Withdraw
-          </button>
-        ) : (
-          <button
-            type="button"
-            onClick={() => {
-              if (!amountInput) {
-                toast.error("Please input the amount you wish to deposit.");
-                return;
-              } else if (amountInput < 100) {
-                toast.error("You can only deposit a minimum of 100 USD.");
-                return;
-              } else if (!adminWalletAddress) {
-                toast.error("No deposit address found.");
-                return;
-              }
-
-              setConfirmInvestmentModal(true);
-            }}
-          >
-            Continue to Deposit
-          </button>
-        )}
+        <button
+          type="button"
+          onClick={() => {
+            if (!amountInput) {
+              toast.error("Please input the amount you wish to Withdraw.");
+              return;
+            } else if (amountInput < 10) {
+              toast.error("You can only withdraw a minimum of 10 USD.");
+              return;
+            } else if (amountInput > walletBalance) {
+              toast.error(
+                "You do not have sufficient funds in your wallet to make this withdrawal."
+              );
+              return;
+            } else if (user.kycStatus !== "verified") {
+              toast.error(
+                "You can only withdraw funds after you complete your KYC."
+              );
+              return;
+            } else if (!user.walletAddress) {
+              toast.error("You have not added a USDT withdraw address yet.");
+              return;
+            }
+            setConfirmInvestmentModal(true);
+          }}
+        >
+          Continue to Withdraw
+        </button>
 
         <AnimatePresence>
           {confirmInvestmentModal && (
@@ -185,41 +134,31 @@ export default function DepositForm({ label = null }) {
                   theme: "blue-400",
                   type: "button",
                   disabled: isLoading,
-                  click: clickAction,
+                  click: handleConfirmWithdrawClick,
                 },
               ]}
               isModalOpen={confirmInvestmentModal}
               setIsModal={setConfirmInvestmentModal}
             >
               <div className={styles.modalContent}>
-                <h1>Confirm {isWithdrawForm ? "Withdrawal" : "Deposit"}</h1>
+                <h1>Confirm Withdrawal</h1>
 
                 <span className={styles.amount}>
                   {formatNumber(amountInput)} <span>USD</span>
                 </span>
 
-                {isWithdrawForm ? (
-                  <p>
-                    The exact amount of {formatNumber(amountInput)} USD will be
-                    sent to the USDT address below.
-                  </p>
-                ) : (
-                  <p>
-                    Transfer the exact amount of {formatNumber(amountInput)} USD
-                    to the USDT address below. Then come back to this prompt and
-                    click confirm.
-                  </p>
-                )}
+                <p>
+                  The exact amount of {formatNumber(amountInput)} USD will be
+                  sent to the USDT TRC20 address below.
+                </p>
 
                 <AddressHolder
-                  title={
-                    isWithdrawForm ? "Withdrawal Address" : "Deposit Address"
-                  }
-                  value={
-                    isWithdrawForm ? user.walletAddress : adminWalletAddress
-                  }
+                  title={"Withdrawal Address"}
+                  value={user.walletAddress}
                   walletType="USDT"
+                  walletNetwork="TRC 20"
                   icon="accountBalance"
+                  label="address"
                 />
               </div>
             </Modal>
