@@ -27,6 +27,8 @@ export default function UploadDocumentForm() {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
+
+
   const [images, setImages] = useState({
     mainDoc: "",
     selfieDoc: "",
@@ -41,6 +43,7 @@ export default function UploadDocumentForm() {
 
   function handleImageChange(e, imageType) {
     const file = e.target.files[0];
+
     if (!file) return;
     const totalImageSize = file.size;
 
@@ -57,7 +60,6 @@ export default function UploadDocumentForm() {
     }));
 
     console.log(images.mainDoc.size);
-      e.target.value = "";
   }
 
   function handleModalBackDropClick(booleanValue) {
@@ -123,12 +125,12 @@ export default function UploadDocumentForm() {
             <input
               type="file"
               accept="image/*"
-              // hidden
-              style={{ position: "absolute", opacity: 0 }}
+              hidden
               onInput={(e) => {
                 handleImageChange(e, "mainDoc");
               }}
             />
+
             <div className={styles.selectImageBtn}>
               {!images.mainDoc ? "Click to Select" : "Click to Change"}
             </div>
@@ -148,10 +150,8 @@ export default function UploadDocumentForm() {
             )}
             <input
               type="file"
-              // multiple
               accept="image/*"
-              // hidden
-              style={{ position: "absolute", opacity: 0 }}
+              hidden
               onInput={(e) => {
                 handleImageChange(e, "selfieDoc");
               }}
