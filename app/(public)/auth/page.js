@@ -30,6 +30,10 @@ export default function Login() {
     }
   }, []);
 
+  useEffect(() => {
+    setShowNoReg(false);
+  }, [mode]);
+
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
