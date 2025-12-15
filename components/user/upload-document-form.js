@@ -148,7 +148,9 @@ export default function UploadDocumentForm() {
               type="file"
               // multiple
               accept="image/*"
-              hidden
+              // hidden
+              style={{ position: "absolute", opacity: 0 }}
+              capture="environment"
               onChange={(e) => {
                 handleImageChange(e, "selfieDoc");
               }}

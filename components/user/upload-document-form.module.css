@@ -82,6 +82,7 @@
     background: var(--white);
     overflow: hidden;
     border-radius: 5px;
+      touch-action: manipulation;
   }
 
   & .selectImageBtn {
@@ -90,6 +91,7 @@
     width: fit-content;
     padding: 0.5rem 0.8rem;
     position: absolute;
+      pointer-events: none;
   }
 
   .modalContent {
