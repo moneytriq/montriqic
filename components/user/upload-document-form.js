@@ -46,8 +46,8 @@ export default function UploadDocumentForm() {
 
     const totalImageSizeInMb = totalImageSize / (1024 * 1024);
 
-    if (totalImageSizeInMb > 5) {
-      toast.error(`You can only upload images of total file size below 5MB.`);
+    if (totalImageSizeInMb > 10) {
+      toast.error(`You can only upload images of total file size below 10MB.`);
       return;
     }
 
@@ -122,7 +122,8 @@ export default function UploadDocumentForm() {
             <input
               type="file"
               accept="image/*"
-              hidden
+              // hidden
+              style={{ position: "absolute", opacity: 0 }}
               onChange={(e) => {
                 handleImageChange(e, "mainDoc");
               }}
@@ -150,7 +151,6 @@ export default function UploadDocumentForm() {
               accept="image/*"
               // hidden
               style={{ position: "absolute", opacity: 0 }}
-              capture="environment"
               onChange={(e) => {
                 handleImageChange(e, "selfieDoc");
               }}
