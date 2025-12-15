@@ -56,9 +56,9 @@ export default function WalletAddressHolder({ title, value, icon }) {
 //   console.log("v",value);
 
   return (
-    <div className={styles.addressField} key={value}>
+    <div className={styles.addressField} key={value} >
       <label>{title}</label>
-      <div className={styles.account}>
+      <div className={styles.account} style={{ overflowX: "clip" }}>
         <Icon />
 
         <div
