@@ -123,7 +123,12 @@ export default function UserDepositForm() {
     setIsLoading(true);
     try {
       const amount = amountInput * selectedRate;
-      const res = await makeDeposit(user.id, user.fullName, amount);
+      const res = await makeDeposit(
+        user.id,
+        user.fullName,
+        amount,
+        selectedWallet.type
+      );
 
       if (res.error) {
         toast.error(res.error);
@@ -196,8 +201,8 @@ export default function UserDepositForm() {
           {amountInput && (
             <p className={styles.rateCalculator}>
               {" "}
-              You will recieve {formatNumber(amountInput * selectedRate)} USD based on the
-              current exchange rate.
+              You will recieve {formatNumber(amountInput * selectedRate)} USD
+              based on the current exchange rate.
             </p>
           )}
         </div>
