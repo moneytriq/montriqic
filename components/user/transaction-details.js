@@ -223,7 +223,7 @@ export default function TransactionDetails({ data, label = null, baseUrl }) {
           return (
             <li key={detail.title}>
               <p>{detail.title}</p>
-              <p>{detail.value}</p>
+              <p style={detail.title === "User Wallet" ? {wordBreak: "break-all"} : undefined}>{detail.value}</p>
             </li>
           );
         })}
