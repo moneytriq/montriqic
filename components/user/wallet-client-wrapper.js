@@ -231,7 +231,7 @@ export default function WalletClientWrapper() {
                   </div>
 
                   <div className={styles.field}>
-                    <label htmlFor="network">Network</label>
+                    <label htmlFor="network">Network *</label>
 
                     <input
                       type="text"

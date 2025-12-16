@@ -91,7 +91,8 @@ export default async function AdminOverviewPage() {
         <RecentActivitiesGrid
           activities={investmentHistory}
           baseUrl="/investment/history"
-          label="users"
+          label="admin"
+       
         />
       </Section>
 

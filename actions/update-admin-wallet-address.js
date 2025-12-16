@@ -10,8 +10,10 @@ export async function updateAdminWalletAddress(
   formData
 ) {
   const address = formData.get("address")?.toLowerCase();
-  const network = formData.get("network")?.toLowerCase();
+  const network = formData.get("network")?.toLowerCase() || null;
   const type = formData.get("type")?.toLowerCase();
+
+  
 
   if (address?.trim().length < 8) {
     return {
@@ -27,12 +29,12 @@ export async function updateAdminWalletAddress(
         error: `Invalid Wallet Type`,
       };
     }
-    if (network?.trim().length < 3) {
-      return {
-        success: false,
-        error: `Invalid Network`,
-      };
-    }
+    // if (type === "usdt" && network?.trim().length < 3) {
+    //   return {
+    //     success: false,
+    //     error: `Invalid Network`,
+    //   };
+    // }
 
     const { count, error: countError } = await supabase
       .from("admin_wallet")

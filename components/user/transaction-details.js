@@ -33,7 +33,7 @@ export default function TransactionDetails({ data, label = null, baseUrl }) {
   }
 
   const isWithdraw = data.transaction_type === "withdraw";
-  
+
   const amount =
     data.profit &&
     data.status === "completed" &&
@@ -53,12 +53,29 @@ export default function TransactionDetails({ data, label = null, baseUrl }) {
         </>
       ),
     },
+    ...(data.end_date
+      ? [
+          {
+            title: "End Date",
+            value: (
+              <>
+                {formatDate(data.end_date)}{" "}
+                <span className={styles.time}>
+                  {formatTime(data.end_date)}
+                </span>
+              </>
+            ),
+          },
+        ]
+      : []),
     {
       title: "Amount",
       value: `${formatNumber(amount)} USD`,
     },
     { title: "Description", value: data.description },
-    ...(data.wallet_address ? [{ title: "User Wallet", value: data.wallet_address }] : []),
+    ...(data.wallet_address
+      ? [{ title: "User Wallet", value: data.wallet_address }]
+      : []),
     { title: "Transaction Ref", value: data.id || data.transaction_id },
     { title: "Status", value: data.status },
   ];
@@ -223,7 +240,15 @@ export default function TransactionDetails({ data, label = null, baseUrl }) {
           return (
             <li key={detail.title}>
               <p>{detail.title}</p>
-              <p style={detail.title === "User Wallet" ? {wordBreak: "break-all"} : undefined}>{detail.value}</p>
+              <p
+                style={
+                  detail.title === "User Wallet"
+                    ? { wordBreak: "break-all" }
+                    : undefined
+                }
+              >
+                {detail.value}
+              </p>
             </li>
           );
         })}
