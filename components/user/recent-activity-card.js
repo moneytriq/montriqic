@@ -28,7 +28,7 @@ export default function RecentActivityCard({
       : activity.type === "users"
       ? UserIcon
       : ArrowOut;
-  const TransactionTypeIcon = activity.type === "deposit" ? Plus : Minus;
+  const TransactionTypeIcon = activity.type === "deposit" || activity.type === "referral earning" ? Plus : Minus;
 
   // console.log("act", activity);
 
