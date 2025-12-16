@@ -11,6 +11,8 @@ export async function makeInvestment(
   investmentAmount
 ) {
 //   const supabase = createSupabaseServerClient();
+// console.log("server",userId,userFullName, planId, planName, investmentAmount);
+
 
   const { data, error } = await supabase.rpc("make_investment_rpc", {
     p_user_id: userId,
