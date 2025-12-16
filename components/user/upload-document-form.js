@@ -15,6 +15,7 @@ import { uploadKycDetails } from "@/actions/upload-kyc-details";
 import { UserContext } from "@/store/user-context";
 import FormSubmitButton from "../ui/form-submit-button";
 import { SelectPlanContext } from "@/store/select-plan-context";
+import imageCompression from "browser-image-compression";
 
 const { checkCircle: CheckIcon, info: InfoIcon } = iconsConfig;
 
@@ -26,8 +27,6 @@ export default function UploadDocumentForm() {
   const [isSuccessModal, setIsSuccessModal] = useState(false);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
-
-
 
   const [images, setImages] = useState({
     mainDoc: "",
@@ -41,10 +40,15 @@ export default function UploadDocumentForm() {
     }
   }, [kycDocumentType.type]);
 
-  function handleImageChange(e, imageType) {
+  async function handleImageChange(e, imageType) {
     const file = e.target.files[0];
-
     if (!file) return;
+    
+    if (!file.type.startsWith("image/")) {
+      alert("Please select an image");
+      e.target.value = "";
+      return;
+    }
     const totalImageSize = file.size;
 
     const totalImageSizeInMb = totalImageSize / (1024 * 1024);
@@ -53,13 +57,19 @@ export default function UploadDocumentForm() {
       toast.error(`You can only upload images of total file size below 10MB.`);
       return;
     }
+    const options = {
+      maxSizeMB: 0.1, // Max size in MB
+      maxWidthOrHeight: 1024, // Resize if larger than this
+      useWebWorker: true,
+    };
+    const compressedFile = await imageCompression(file, options);
 
     setImages((prev) => ({
       ...prev,
-      [imageType]: file,
+      [imageType]: compressedFile,
     }));
 
-    console.log(images.mainDoc.size);
+    console.log("compressed", compressedFile);
   }
 
   function handleModalBackDropClick(booleanValue) {
@@ -124,7 +134,7 @@ export default function UploadDocumentForm() {
             )}
             <input
               type="file"
-              accept="image/*"
+              // accept="image/*"
               hidden
               onInput={(e) => {
                 handleImageChange(e, "mainDoc");
@@ -150,7 +160,7 @@ export default function UploadDocumentForm() {
             )}
             <input
               type="file"
-              accept="image/*"
+              // accept="image/*"
               hidden
               onInput={(e) => {
                 handleImageChange(e, "selfieDoc");
