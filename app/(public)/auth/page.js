@@ -8,6 +8,7 @@ import { signup, signin } from "@/actions/auth-actions";
 import { toast } from "sonner";
 import FormSubmitButton from "@/components/ui/form-submit-button";
 import { MobileNavContext } from "@/store/mobileNav-context";
+import LinkWithProgress from "@/components/ui/link-with-progress";
 
 const EyeIcon = iconsConfig["eye"];
 const EmailIcon = iconsConfig["email"];
@@ -79,13 +80,28 @@ export default function Login() {
         } else if (res.authError && res.authError === "no ref") {
           setShowNoReg(true);
           return;
+        } else if (
+          res.authError &&
+          res.authError ===
+            "Email not confirmed yet. Follow the link sent to your email to proceed."
+        ) {
+          console.log("here");
+
+          router.push(`/auth/email-verify?email=${inputs.email}`);
+          toast.error(res.authError);
+          return;
         } else if (res.authError && res.authError !== "no ref") {
           toast.error(res.authError);
           return;
         }
 
-        router.replace("/dashboard");
-        toast.success(res.message);
+        if (mode === "signup") {
+          router.push(`/auth/email-verify?email=${inputs.email}`);
+          toast.success(res.message);
+        } else {
+          router.replace("/dashboard");
+          toast.success(res.message);
+        }
 
         return {};
       } catch (error) {
@@ -202,7 +218,7 @@ export default function Login() {
                     <input type="checkbox" />
                     <span>Remember me</span>
                   </label>
-                  {/* <a href="#">Forgot Password?</a> */}
+                  <LinkWithProgress href="/auth/forgot-password">Forgot Password?</LinkWithProgress>
                 </div>
               )}
             </div>

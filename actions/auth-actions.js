@@ -32,8 +32,6 @@ export async function signup(refId, prevState, formData) {
     };
   }
 
-  console.log("REFID", refId);
-
   if (!refId) {
     return {
       success: false,
@@ -94,7 +92,7 @@ export async function signup(refId, prevState, formData) {
         password,
       },
       {
-        redirectTo: `${Next_Base_URL}`,
+        redirectTo: `${Next_Base_URL}/dashboard`,
       }
     );
 
@@ -118,7 +116,7 @@ export async function signup(refId, prevState, formData) {
   revalidatePath("/");
   return {
     success: true,
-    message: "Account created successfully.",
+    message: "Account created successfully. Check email for verification link",
     authError: null,
   };
 }
@@ -182,6 +180,33 @@ export async function signin(refId, prevState, formData) {
     });
 
     if (signinError) {
+      console.log("login erorr", signinError.message);
+
+      if (signinError.message === "Email not confirmed") {
+        const { data, error } = await supabase.auth.resend({
+          type: "signup",
+          email,
+          options: {
+            emailRedirectTo: `${Next_Base_URL}/auth`,
+          },
+        });
+
+        if (error) {
+          return {
+            success: false,
+            message: null,
+            authError: "Failed to send verification link.",
+          };
+        }
+
+        return {
+          success: false,
+          message: null,
+          authError:
+            "Email not confirmed yet. Follow the link sent to your email to proceed.",
+        };
+      }
+
       return {
         success: false,
         message: null,

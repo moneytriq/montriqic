@@ -52,7 +52,7 @@ export default function ProfileSectionSelector() {
         description={[
           {
             type: "text",
-            text: "This is the USDT TRC20 address where you will recieve your payouts. Ensure this address is of TRC20.",
+            text: "This is the USDT ERC20 address where you will recieve your payouts. Ensure this address is of ERC20.",
           },
         ]}
       >
@@ -60,7 +60,7 @@ export default function ProfileSectionSelector() {
           title="Withdraw Address"
           value={walletAddress}
           walletType="USDT"
-          walletNetwork="TRC20"
+          walletNetwork="ERC20"
           icon="accountBalance"
           label="address"
         />
@@ -73,7 +73,7 @@ export default function ProfileSectionSelector() {
       <Section label="warning-cards">
         <WarningCard
           icon="warning"
-          text="Add a USDT TRC20 address. This is the address where you will recieve all your payouts. Ensure the address is of TRC20 to avoid loss of funds."
+          text="Add a USDT ERC20 address. This is the address where you will recieve all your payouts. Ensure the address is of ERC20 to avoid loss of funds."
           buttonText="Add Address"
           buttonActionType="modal"
           theme="yellow-400"
