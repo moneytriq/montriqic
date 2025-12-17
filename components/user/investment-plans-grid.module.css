@@ -25,17 +25,20 @@
       & > div {
         display: flex;
         align-items: center;
-        width: 60%;
-        justify-content: space-between;
+        width: 100%;
+        justify-content: space-around;
         gap: 1rem;
+        margin-top: 1.5rem;
 
         & p {
           display: flex;
+          gap: .3rem;
           flex-direction: column;
           align-items: center;
           justify-content: center;
 
           & :first-child {
+            font-size: 1.5rem;
             color: var(--jacarta-700);
           }
           & :last-child {
