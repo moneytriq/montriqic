@@ -147,7 +147,7 @@ export default function Select({
                           {item.label}
                           <p>
                             Invest for {item.term_duration} {item.term} and get{" "}
-                            {item.interest_rate}% profit
+                            {item.total_return}% profit
                           </p>
                         </span>
                       </div>
