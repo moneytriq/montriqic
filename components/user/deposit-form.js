@@ -149,14 +149,14 @@ export default function DepositForm({ label = null }) {
 
                 <p>
                   The exact amount of {formatNumber(amountInput)} USD will be
-                  sent to the USDT TRC20 address below.
+                  sent to the USDT ERC20 address below.
                 </p>
 
                 <AddressHolder
                   title={"Withdrawal Address"}
                   value={user.walletAddress}
                   walletType="USDT"
-                  walletNetwork="TRC 20"
+                  walletNetwork="ERC20"
                   icon="accountBalance"
                   label="address"
                 />
