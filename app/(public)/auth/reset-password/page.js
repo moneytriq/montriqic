@@ -7,12 +7,10 @@ import { iconsConfig } from "@/lib/icons/iconsConfig";
 import { toast } from "sonner";
 
 import FormSubmitButton from "@/components/ui/form-submit-button";
-import { resetPassword } from "@/actions/password-reset-action";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/db/supabaseClient";
 
 const EyeIcon = iconsConfig["eye"];
-const EmailIcon = iconsConfig["email"];
 const LockIcon = iconsConfig["locked"];
 const EyeOffIcon = iconsConfig["eyeOff"];
 
