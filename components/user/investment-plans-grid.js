@@ -8,10 +8,13 @@ export default async function InvestmentPlansGrid() {
 
   try {
     const { data: investmentPlansData, error: investmentPlansError } =
-      await supabase.from("investment_plans").select("*");
+      await supabase
+        .from("investment_plans_ordered")
+        .select("*")
+        .order("interest_priority", { ascending: true });
+
     if (investmentPlansError) throw investmentPlansError;
-   
-    
+
     return (
       <>
         {investmentPlansData.length < 1 && <p className="no-data">No Data</p>}
@@ -28,7 +31,9 @@ export default async function InvestmentPlansGrid() {
                   <div>
                     <p>
                       <span>{data.interest_rate}%</span>
-                      <span>Daily Interest</span>
+                      <span style={{ textTransform: "capitalize" }}>
+                        {data.interest_interval} Interest
+                      </span>
                     </p>
                     <p>
                       <span>{data.term_duration}</span>
