@@ -45,7 +45,7 @@ export default function DepositForm({ label = null }) {
         return;
       }
       toast.success(
-        "Withdrawal request sent succeffully. Awaiting confirmation"
+        "Withdrawal request sent successfully. Awaiting confirmation"
       );
 
       setConfirmInvestmentModal(false);
