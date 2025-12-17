@@ -45,7 +45,7 @@ export default async function InvestmentPlansGrid() {
 
                   <li>
                     <span>Max Deposit</span>
-                    <span>{formatNumber(data.max_deposit)} USD</span>
+                    <span>Unlimited</span>
                   </li>
 
                   <li>
