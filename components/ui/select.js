@@ -94,7 +94,7 @@ export default function Select({
                     {selected && (
                       <p>
                         Invest for {selected.term_duration} {selected.term} and
-                        get {selected.interest_rate}% profit
+                        get {selected.total_return}% profit
                       </p>
                     )}
                   </span>
