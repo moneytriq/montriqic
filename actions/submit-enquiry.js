@@ -1,6 +1,6 @@
 "use server";
 import { sendEmail } from "@/lib/resend";
-// import { sendEmail } from "@/lib/nodemailer";
+
 import xss from "xss";
 export default async function submitEnquiry(prevState, formData) {
   const name = formData.get("name");

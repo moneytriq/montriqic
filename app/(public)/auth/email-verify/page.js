@@ -48,8 +48,6 @@ export default async function VerifyEmail({ searchParams }) {
     redirect("/auth");
   }
 
-  console.log("sxcw", user);
-
   return (
     <section id="login-main" className={classes.authSection}>
       <div className={classes.wrapper}>

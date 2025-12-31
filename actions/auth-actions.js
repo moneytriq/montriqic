@@ -3,6 +3,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import { sendWelcomeEmail } from "./email";
 
 const supabaseURL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -109,6 +110,9 @@ export async function signup(refId, prevState, formData) {
     await supabase.from("referral_earnings_ledger").insert({
       user_id: userData.user.id,
     });
+
+    await sendWelcomeEmail(email);
+    
   } catch (error) {
     console.error("Supabase", error.message);
     throw error;
