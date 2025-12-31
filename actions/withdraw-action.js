@@ -3,7 +3,11 @@ import { supabase } from "@/lib/db/supabaseClient";
 // import { createSupabaseServerClient } from "@/lib/db/supabaseServer";
 import { revalidatePath } from "next/cache";
 
+import { formatNumber } from "@/util/util";
+import { sendUserWithdrawRequestEmail } from "./email";
+
 export async function makeWithdrawal(userId, userFullName, withdrawAmount) {
+  const amount = formatNumber(withdrawAmount);
   const { data: walletBalance, error: walletBalanceError } = await supabase
     .from("wallet")
     .select("available_balance")
@@ -24,7 +28,7 @@ export async function makeWithdrawal(userId, userFullName, withdrawAmount) {
 
   const { data: kycStatus, error: kycStatusError } = await supabase
     .from("user_profile")
-    .select("kyc_status, wallet_address")
+    .select("kyc_status, wallet_address, user_email")
     .eq("user_id", userId)
     .single();
 
@@ -56,6 +60,8 @@ export async function makeWithdrawal(userId, userFullName, withdrawAmount) {
   });
 
   if (error) throw error;
+
+  await sendUserWithdrawRequestEmail(kycStatus.user_email, amount);
 
   revalidatePath("/");
 

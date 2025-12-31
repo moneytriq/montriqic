@@ -3,16 +3,21 @@ import { supabase } from "@/lib/db/supabaseClient";
 // import { createSupabaseServerClient } from "@/lib/db/supabaseServer";
 import { revalidatePath } from "next/cache";
 
+import { formatNumber } from "@/util/util";
+import { sendUserInvestmentEmail } from "./email";
+
 export async function makeInvestment(
   userId,
   userFullName,
   planId,
   planName,
-  investmentAmount
+  investmentAmount,
+  userEmail
 ) {
-//   const supabase = createSupabaseServerClient();
-// console.log("server",userId,userFullName, planId, planName, investmentAmount);
+  //   const supabase = createSupabaseServerClient();
+  // console.log("server",userId,userFullName, planId, planName, investmentAmount);
 
+  const amount = formatNumber(investmentAmount);
 
   const { data, error } = await supabase.rpc("make_investment_rpc", {
     p_user_id: userId,
@@ -24,10 +29,11 @@ export async function makeInvestment(
 
   if (error) throw error;
 
-  // revalidate cache
+  await sendUserInvestmentEmail(userEmail, amount, planName);
+
   revalidatePath("/");
 
-  return data; // { success: true/false, error: "..."}
+  return data;
 }
 
 // import { createSupabaseServerClient } from "@/lib/db/supabaseServer";

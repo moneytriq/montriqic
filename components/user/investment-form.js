@@ -50,7 +50,8 @@ export default function InvestmentForm() {
         user.fullName,
         selected.id,
         selected.label,
-        amountInput
+        amountInput,
+        user.email
       );
 
       if (res.error) {

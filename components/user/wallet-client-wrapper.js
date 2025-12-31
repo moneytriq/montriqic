@@ -197,8 +197,8 @@ export default function WalletClientWrapper() {
                 <>
                   <h1>Add New Deposit Address</h1>
                   <p>
-                    These are the only supported wallet types: 'btc', 'usdt',
-                    'xrp', 'eth', 'trx', 'sol'.
+                    These are the only supported wallet types: 'BTC', 'USDT',
+                    'XRP', 'ETH', 'TRX' and 'LTC'.
                   </p>
                 </>
               )}

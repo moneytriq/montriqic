@@ -1,11 +1,16 @@
 "use server";
 import { supabase } from "@/lib/db/supabaseClient";
 import { revalidatePath } from "next/cache";
+import {
+  sendApproveUserKycRequestEmail,
+  sendDenyUserKycRequestEmail,
+
+} from "./email";
 
 export async function approveUserKyc(userId) {
   const { data: userKycStatus, error: userKycStatusError } = await supabase
     .from("user_profile")
-    .select("kyc_status")
+    .select("kyc_status, user_email")
     .eq("user_id", userId)
     .single();
 
@@ -26,6 +31,8 @@ export async function approveUserKyc(userId) {
 
   if (updateUserError) throw updateUserError;
 
+  await sendApproveUserKycRequestEmail(userKycStatus.user_email);
+
   revalidatePath("/");
 
   return { success: true, error: null };
@@ -34,7 +41,7 @@ export async function approveUserKyc(userId) {
 export async function denyUserKyc(userId) {
   const { data: userKycStatus, error: userKycStatusError } = await supabase
     .from("user_profile")
-    .select("kyc_status")
+    .select("kyc_status, user_email")
     .eq("user_id", userId)
     .single();
 
@@ -61,6 +68,8 @@ export async function denyUserKyc(userId) {
     .eq("user_id", userId);
 
   if (deleteRecordError) throw deleteRecordError;
+
+  await sendDenyUserKycRequestEmail(userKycStatus.user_email);
 
   revalidatePath("/");
 

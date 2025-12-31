@@ -45,7 +45,7 @@ export default async function InvestmentPlansGrid() {
                 <ul className={styles.content}>
                   <li>
                     <span>Min Deposit</span>
-                    <span>{formatNumber(data.min_deposit)} USD</span>
+                    <span style={{fontWeight: "bold", color:"var(--jacarta-700)"}}>{formatNumber(data.min_deposit)} USD</span>
                   </li>
 
                   <li>

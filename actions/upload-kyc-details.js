@@ -1,7 +1,18 @@
 "use server";
 import { createSupabaseServerClient } from "@/lib/db/supabaseServer";
+import { sendUserKycRequestEmail } from "./email";
 
-export async function uploadKycDetails(userId, documentType, country, images) {
+
+
+export async function uploadKycDetails(
+  userId,
+  documentType,
+  country,
+  images,
+  email,
+  prevState,
+  formData
+) {
   const supabase = await createSupabaseServerClient();
 
   let error;
@@ -17,7 +28,6 @@ export async function uploadKycDetails(userId, documentType, country, images) {
     error = "Select a country.";
     return { success: false, error };
   }
-
 
   const docId = `document/${userId}-${Date.now()}-${images.mainDoc.name}`;
   const selfieId = `selfie/${userId}-${Date.now()}-${images.selfieDoc.name}`;
@@ -53,6 +63,7 @@ export async function uploadKycDetails(userId, documentType, country, images) {
   );
 
   if (rpcError) throw rpcError;
+
+  await sendUserKycRequestEmail(email);
   return rpcResult;
 }
-

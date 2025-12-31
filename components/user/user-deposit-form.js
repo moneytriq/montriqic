@@ -36,7 +36,7 @@ export default function UserDepositForm() {
     btc: "",
     eth: "",
     xrp: "",
-    sol: "",
+    ltc: "",
     trx: "",
     usdt: "",
   });
@@ -52,15 +52,16 @@ export default function UserDepositForm() {
     const getExchangeData = async () => {
       try {
         const res = await fetch(
-          "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,ripple,tether,solana,tron&vs_currencies=usd,eur"
+          "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,ripple,tether,litecoin,tron&vs_currencies=usd,eur"
         );
         const data = await res.json();
+    
 
         setRates({
           btc: data.bitcoin.usd,
           eth: data.ethereum.usd,
           xrp: data.ripple.usd,
-          sol: data.solana.usd,
+          ltc: data.litecoin.usd,
           trx: data.tron.usd,
           usdt: data.tether.usd,
         });
@@ -127,7 +128,8 @@ export default function UserDepositForm() {
         user.id,
         user.fullName,
         amount,
-        selectedWallet.type
+        selectedWallet.type,
+        user.email
       );
 
       if (res.error) {
@@ -148,6 +150,8 @@ export default function UserDepositForm() {
       setIsLoading(false);
     }
   }
+
+  console.log("r",rates);
 
   return (
     <>

@@ -60,9 +60,7 @@ export default function TransactionDetails({ data, label = null, baseUrl }) {
             value: (
               <>
                 {formatDate(data.end_date)}{" "}
-                <span className={styles.time}>
-                  {formatTime(data.end_date)}
-                </span>
+                <span className={styles.time}>{formatTime(data.end_date)}</span>
               </>
             ),
           },
@@ -108,7 +106,12 @@ export default function TransactionDetails({ data, label = null, baseUrl }) {
   async function handleDepositApproveClick() {
     setIsApproving(true);
     try {
-      const res = await approveUserDeposit(data.user_id, data.id);
+      const depositAmount = formatNumber(amount);
+      const res = await approveUserDeposit(
+        data.user_id,
+        data.id,
+        depositAmount
+      );
 
       if (res.error) {
         toast.error(res.error);
@@ -128,7 +131,8 @@ export default function TransactionDetails({ data, label = null, baseUrl }) {
   async function handleDepositDenyClick() {
     setIsDenying(true);
     try {
-      const res = await denyUserDeposit(data.user_id, data.id);
+      const depositAmount = formatNumber(amount);
+      const res = await denyUserDeposit(data.user_id, data.id, depositAmount);
 
       if (res.error) {
         toast.error(res.error);
@@ -148,7 +152,12 @@ export default function TransactionDetails({ data, label = null, baseUrl }) {
   async function handleWithdrawApproveClick() {
     setIsApproving(true);
     try {
-      const res = await approveUserWithdraw(data.user_id, data.id);
+      const withdrawAmount = formatNumber(amount);
+      const res = await approveUserWithdraw(
+        data.user_id,
+        data.id,
+        withdrawAmount
+      );
 
       if (res.error) {
         toast.error(res.error);
@@ -168,7 +177,8 @@ export default function TransactionDetails({ data, label = null, baseUrl }) {
   async function handleWithdrawDenyClick() {
     setIsDenying(true);
     try {
-      const res = await denyUserWithdraw(data.user_id, data.id);
+      const withdrawAmount = formatNumber(amount);
+      const res = await denyUserWithdraw(data.user_id, data.id, withdrawAmount);
 
       if (res.error) {
         toast.error(res.error);

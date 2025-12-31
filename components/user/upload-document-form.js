@@ -87,6 +87,7 @@ export default function UploadDocumentForm() {
           kycDocumentType.type,
           kycDocumentType.country,
           images,
+          user.email,
           prevState,
           formData
         );
