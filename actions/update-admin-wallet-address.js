@@ -9,8 +9,8 @@ export async function updateAdminWalletAddress(
   prevState,
   formData
 ) {
-  const address = formData.get("address")?.toLowerCase();
-  const network = formData.get("network")?.toLowerCase() || null;
+  const address = formData.get("address");
+  const network = formData.get("network") || null;
   const type = formData.get("type")?.toLowerCase();
 
   
