@@ -9,9 +9,25 @@ import WarningCardsGrid from "@/components/user/warning-cards-grid";
 import getRecentActivities from "@/lib/db/get-recent-activities";
 import { createSupabaseServerClient } from "@/lib/db/supabaseServer";
 import React from "react";
+import ReferralToggle from "@/components/admin/ReferralToggle";
+
 
 export default async function DashboardPage() {
   const supabase = await createSupabaseServerClient();
+  
+  let referralRequired = false;
+
+const { data: settings, error: settingsError } = await supabase
+  .from("app_settings")
+  .select("referral_required")
+  .single();
+
+if (settingsError) {
+  console.error("Failed to load referral setting:", settingsError.message);
+} else {
+  referralRequired = settings.referral_required;
+}
+
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -145,6 +161,12 @@ export default async function DashboardPage() {
           description="Here's a summary of your account. Have fun!"
         />
       </Section>
+{userDetails?.role === "admin" && (
+  <Section label="platform-settings" title="Admin Platform Settings">
+    <ReferralToggle enabled={referralRequired} />
+  </Section>
+)}
+
       {isWarningSection && (
         <Section label="warning-cards">
           <WarningCardsGrid />
