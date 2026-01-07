@@ -154,10 +154,6 @@ if (settingsError) {
 
   return (
   <>
-    <p style={{ color: "red", fontSize: "20px", fontWeight: "bold" }}>
-      DASHBOARD FILE IS RENDERING
-    </p>
-
     <Section label="page-header">
       <PageHeader
         banner="Welcome"
