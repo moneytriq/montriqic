@@ -105,15 +105,24 @@ export default function Footer({ user }) {
         </div>
 
         {/* BOTTOM BAR */}
-        <div className={styles.bottomBar}>
-          <span>© {new Date().getFullYear()} Monetriq</span>
+<div className={styles.bottomBar}>
+  <div className={styles.bottomLeft}>
+    {/* Google Translator */}
+    <div
+      id="google_translate_element"
+      className={styles.googleTranslator}
+    />
 
-          <ul>
-            <li>
-              <a href={footerData.termsLink}>Terms and conditions</a>
-            </li>
-          </ul>
-        </div>
+    <span>© {new Date().getFullYear()} Monetriq</span>
+  </div>
+
+  <ul>
+    <li>
+      <a href={footerData.termsLink}>Terms and conditions</a>
+    </li>
+  </ul>
+</div>
+
       </div>
     </footer>
   );
