@@ -6,6 +6,7 @@ import { createSupabaseServerClient } from "@/lib/db/supabaseServer";
 import UserContextProvider from "@/store/user-context";
 import { Toaster } from "sonner";
 import Jivio from "@/components/ui/jivio";
+import GoogleTranslator from "@/components/ui/google-translator";
 // import TawkTo from "@/components/ui/tawkto";
 
 export const metadata = {
@@ -59,9 +60,11 @@ export default async function RootLayout({ children }) {
         <UserContextProvider userDetails={userDetails}>
           <MobileNavContextProvider>
             <ProgressBar />
-            <Jivio />
-            {children}
-            <Toaster />
+              <Jivio />
+              <GoogleTranslator />
+              {children}
+              <Toaster />
+
           </MobileNavContextProvider>
         </UserContextProvider>
       </body>
