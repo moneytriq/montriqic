@@ -23,37 +23,16 @@ export async function signup(refId, prevState, formData) {
   if (!password || password.trim().length < 8) {
     errors.password = "Password must be atleast 8 characters long.";
   }
+
   if (password?.trim() !== confirmPassword?.trim()) {
     errors.confirmPassword = "Passwords must match.";
   }
 
   if (Object.keys(errors).length > 0) {
-    return {
-      errors,
-    };
+    return { errors };
   }
 
-  // 🔐 Check admin referral setting
-const { data: settings, error: settingsError } = await supabase
-  .from("app_settings")
-  .select("referral_required")
-  .limit(1)
-  .single();
-
-if (settingsError) {
-  console.error("Settings error:", settingsError.message);
-}
-
-// Enforce referral ONLY if admin enabled it
-if (settings?.referral_required && !refId) {
-  return {
-    success: false,
-    message: null,
-    authError: "no ref",
-  };
-}
-
-
+  // ✅ CREATE SUPABASE FIRST
   const cookieStore = await cookies();
 
   const supabase = createServerClient(supabaseURL, serviceRoleKey, {
@@ -69,28 +48,48 @@ if (settings?.referral_required && !refId) {
     },
   });
 
-  try {
-    const { count, error: countError } = await supabase
-      .from("user_profile")
-      .select("*", { count: "exact", head: true })
-      .eq("user_id", refId);
+  // ✅ FETCH ADMIN SETTING AFTER SUPABASE EXISTS
+  const { data: settings, error: settingsError } = await supabase
+    .from("app_settings")
+    .select("referral_required")
+    .limit(1)
+    .single();
 
-    if (count < 1) {
-      return {
-        success: false,
-        message: null,
-        authError: "Invalid referal link",
-      };
+  if (settingsError) {
+    console.error("Settings error:", settingsError.message);
+  }
+
+  // ✅ ENFORCE REFERRAL ONLY IF ADMIN ENABLED IT
+  if (settings?.referral_required && !refId) {
+    return {
+      success: false,
+      message: null,
+      authError: "no ref",
+    };
+  }
+
+  try {
+    // 🔍 Validate referrer ONLY if refId exists
+    if (refId) {
+      const { count } = await supabase
+        .from("user_profile")
+        .select("*", { count: "exact", head: true })
+        .eq("user_id", refId);
+
+      if (count < 1) {
+        return {
+          success: false,
+          message: null,
+          authError: "Invalid referal link",
+        };
+      }
     }
 
-    const { data: userRaw, error: listError } =
-      await supabase.auth.admin.listUsers({
-        filter: `email=eq.${email}`,
-      });
+    const { data: userRaw } = await supabase.auth.admin.listUsers({
+      filter: `email=eq.${email}`,
+    });
 
-    const users = userRaw.users;
-
-    const user = users.find((u) => u.email === email);
+    const user = userRaw.users.find((u) => u.email === email);
 
     if (user) {
       return {
@@ -100,15 +99,11 @@ if (settings?.referral_required && !refId) {
       };
     }
 
-    const { data: userData, error: signUpError } = await supabase.auth.signUp(
-      {
-        email,
-        password,
-      },
-      {
-        redirectTo: `${Next_Base_URL}/dashboard`,
-      }
-    );
+    const { data: userData, error: signUpError } =
+      await supabase.auth.signUp(
+        { email, password },
+        { redirectTo: `${Next_Base_URL}/dashboard` }
+      );
 
     if (signUpError) throw signUpError;
 
@@ -116,27 +111,33 @@ if (settings?.referral_required && !refId) {
       user_id: userData.user.id,
     });
 
-    await supabase.from("referrals").insert({
-      user_id: refId,
-      referee_id: userData.user.id,
-    });
-    await supabase.from("referral_earnings_ledger").insert({
-      user_id: userData.user.id,
-    });
+    // ✅ INSERT REFERRAL DATA ONLY IF REFERRAL EXISTS
+    if (refId) {
+      await supabase.from("referrals").insert({
+        user_id: refId,
+        referee_id: userData.user.id,
+      });
+
+      await supabase.from("referral_earnings_ledger").insert({
+        user_id: userData.user.id,
+      });
+    }
 
     await sendWelcomeEmail(email);
-    
   } catch (error) {
-    console.error("Supabase", error.message);
+    console.error("Supabase signup error:", error);
     throw error;
   }
+
   revalidatePath("/");
+
   return {
     success: true,
     message: "Account created successfully. Check email for verification link",
     authError: null,
   };
 }
+
 
 export async function signin(refId, prevState, formData) {
   const email = formData.get("email");
