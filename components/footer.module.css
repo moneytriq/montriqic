@@ -137,3 +137,22 @@
     color: var(--teal-400);
   }
 }
+
+.bottomLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.googleTranslator {
+  display: inline-block;
+}
+
+/* Style Google Translate dropdown */
+.googleTranslator :global(.goog-te-gadget) {
+  font-size: 12px;
+}
+
+.googleTranslator :global(.goog-te-combo) {
+  padding: 2px 4px;
+}
