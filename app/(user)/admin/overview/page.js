@@ -4,6 +4,8 @@ import RecentActivitiesGrid from "@/components/user/recent-activities-grid";
 import Section from "@/components/user/section";
 import WalletClientWrapper from "@/components/user/wallet-client-wrapper";
 import { createSupabaseServerClient } from "@/lib/db/supabaseServer";
+import ReferralToggle from "@/components/admin/ReferralToggle";
+
 
 import React from "react";
 
@@ -11,8 +13,19 @@ export default async function AdminOverviewPage() {
   const supabase = await createSupabaseServerClient();
   let accountInformation;
   let investmentHistory;
-
+  let referralRequired;
+  
   try {
+    const { data: settings, error: settingsError } = await supabase
+  .from("app_settings")
+  .select("referral_required")
+  .single();
+
+if (settingsError) throw settingsError;
+
+referralRequired = settings.referral_required;
+
+    
     const { data: financialOverview, error: financialOverviewError } =
       await supabase.from("all_financial_overview").select("*").single();
 
@@ -77,6 +90,9 @@ export default async function AdminOverviewPage() {
           title="Financial Overview"
           description="Here's a summary of your company's finance activities!"
         />
+      </Section>
+            <Section label="platform-settings" title="Platform Settings">
+        <ReferralToggle enabled={referralRequired} />
       </Section>
 
       <Section label="account-cards">
