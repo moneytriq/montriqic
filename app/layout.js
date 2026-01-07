@@ -6,7 +6,10 @@ import { createSupabaseServerClient } from "@/lib/db/supabaseServer";
 import UserContextProvider from "@/store/user-context";
 import { Toaster } from "sonner";
 import Jivio from "@/components/ui/jivio";
+import Script from "next/script";
+
 // import TawkTo from "@/components/ui/tawkto";
+
 
 export const metadata = {
   title: "Monetriq Inc",
@@ -60,6 +63,25 @@ export default async function RootLayout({ children }) {
           <MobileNavContextProvider>
             <ProgressBar />
             <Jivio />
+    <Script
+  id="google-translate-init"
+  strategy="afterInteractive"
+  dangerouslySetInnerHTML={{
+    __html: `
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          { pageLanguage: 'en' },
+          'google_translate_element'
+        );
+      }
+    `,
+  }}
+/>
+
+<Script
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+  strategy="afterInteractive"
+/>
             {children}
             <Toaster />
           </MobileNavContextProvider>
