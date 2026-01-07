@@ -83,14 +83,10 @@ referralRequired = settings.referral_required;
   }
   return (
     <>
-   
-    <p style={{ color: "red", fontSize: "20px" }}>
-      THIS IS THE ADMIN OVERVIEW FILE
-    </p>
       <Section label="page-header">
         <PageHeader
           banner="Admin"
-          title="Financial Overview"
+          title="Financial"
           description="Here's a summary of your company's finance activities!"
         />
       </Section>
