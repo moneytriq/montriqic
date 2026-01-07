@@ -1,8 +1,3 @@
-<p style={{ color: "red", fontSize: "20px", fontWeight: "bold" }}>
-  DASHBOARD FILE IS RENDERING
-</p>
-
-
 import TradingViewWidget from "@/components/tradingview-widget";
 import AccountCardsgrid from "@/components/user/account-cards-grid";
 import DashboardFooter from "@/components/user/dashboard-footer";
@@ -158,14 +153,19 @@ if (settingsError) {
     const refLink = process.env.NEXT_PUBLIC_SITE_URL + `/auth?mode=signup&refId=${user.id}`
 
   return (
-    <>
-      <Section label="page-header">
-        <PageHeader
-          banner="Welcome"
-          title={userDetails.displayName}
-          description="Here's a summary of your account. Have fun!"
-        />
-      </Section>
+  <>
+    <p style={{ color: "red", fontSize: "20px", fontWeight: "bold" }}>
+      DASHBOARD FILE IS RENDERING
+    </p>
+
+    <Section label="page-header">
+      <PageHeader
+        banner="Welcome"
+        title={userDetails.displayName}
+        description="Here's a summary of your account. Have fun!"
+      />
+    </Section>
+
 {userDetails?.role === "admin" && (
   <Section label="platform-settings" title="Admin Platform Settings">
     <ReferralToggle enabled={referralRequired} />
