@@ -6,6 +6,13 @@ import { createSupabaseServerClient } from "@/lib/db/supabaseServer";
 import UserContextProvider from "@/store/user-context";
 import { Toaster } from "sonner";
 import Jivio from "@/components/ui/jivio";
+import dynamic from "next/dynamic";
+
+const GoogleTranslator = dynamic(
+  () => import("@/components/ui/google-translator"),
+  { ssr: false }
+);
+
 // import TawkTo from "@/components/ui/tawkto";
 
 export const metadata = {
