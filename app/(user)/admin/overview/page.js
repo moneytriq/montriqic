@@ -86,7 +86,7 @@ referralRequired = settings.referral_required;
       <Section label="page-header">
         <PageHeader
           banner="Admin"
-          title="Financial"
+          title="Financial Overview"
           description="Here's a summary of your company's finance activities!"
         />
       </Section>
