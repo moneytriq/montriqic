@@ -1,3 +1,8 @@
+<p style={{ color: "red", fontSize: "20px", fontWeight: "bold" }}>
+  DASHBOARD FILE IS RENDERING
+</p>
+
+
 import TradingViewWidget from "@/components/tradingview-widget";
 import AccountCardsgrid from "@/components/user/account-cards-grid";
 import DashboardFooter from "@/components/user/dashboard-footer";
