@@ -8,12 +8,6 @@ import ReferralToggle from "@/components/admin/ReferralToggle";
 
 
 import React from "react";
-return (
-  <>
-    <p style={{ color: "red", fontSize: "20px" }}>
-      THIS IS THE ADMIN OVERVIEW FILE
-    </p>
-
 export default async function AdminOverviewPage() {
   const supabase = await createSupabaseServerClient();
   let accountInformation;
@@ -89,6 +83,10 @@ referralRequired = settings.referral_required;
   }
   return (
     <>
+   
+    <p style={{ color: "red", fontSize: "20px" }}>
+      THIS IS THE ADMIN OVERVIEW FILE
+    </p>
       <Section label="page-header">
         <PageHeader
           banner="Admin"
