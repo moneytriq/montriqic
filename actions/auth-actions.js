@@ -33,13 +33,26 @@ export async function signup(refId, prevState, formData) {
     };
   }
 
-  if (!refId) {
-    return {
-      success: false,
-      message: null,
-      authError: "no ref",
-    };
-  }
+  // 🔐 Check admin referral setting
+const { data: settings, error: settingsError } = await supabase
+  .from("app_settings")
+  .select("referral_required")
+  .limit(1)
+  .single();
+
+if (settingsError) {
+  console.error("Settings error:", settingsError.message);
+}
+
+// Enforce referral ONLY if admin enabled it
+if (settings?.referral_required && !refId) {
+  return {
+    success: false,
+    message: null,
+    authError: "no ref",
+  };
+}
+
 
   const cookieStore = await cookies();
 
